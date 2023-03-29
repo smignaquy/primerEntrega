@@ -1,9 +1,10 @@
 var express = require('express');
+const cortesCarnes = require('../db/dataCarnes');
 var router = express.Router();
 
-/* GET home page. */
+
 router.get('/home', function(req, res) {
-  res.render('index');
+  res.render('index', {imagen : cortesCarnes.lomo.imagen});
 });
 
 module.exports = router;
