@@ -1,10 +1,7 @@
-var express = require('express');
-const cortesCarnes = require('../db/dataCarnes');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
+let indexController = require('../controllers/indexController')
 
-
-router.get('/home', function(req, res) {
-  res.render('index', {imagen : cortesCarnes.lomo.imagen});
-});
+router.get('/home', indexController.home);
 
 module.exports = router;
