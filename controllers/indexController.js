@@ -1,8 +1,8 @@
-let cortesCarnes = require("../db/dataCarnes");
+let db = require("../db/dataCarnes");
 
 let indexController = {
     home : function(req, res){
-        return res.render('index', {imagen: cortesCarnes.lomo.imagen}
+            return res.render('index', {info : db.lista}
         )},
     }
 
