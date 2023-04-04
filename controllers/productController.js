@@ -1,9 +1,9 @@
 let db = require("../db/dataCarnes");
 
 let productController = {
-    index : function(req, res){
-            return res.render('productos', {info : db.lista}
-        )},
+    // index : function(req, res){
+    //         return res.render('productos', {info : db.lista}
+    //     )},
 
     todosProductos: function(req, res){
             return res.render('productos', {info : db.lista}
@@ -18,6 +18,10 @@ let productController = {
             } 
         }
         return res.render('product', {nombre : resultado[0].nombre, imagen : resultado[0].imagen, descripcion : resultado[0].descripcion})
+    },
+
+    search: function(req, res){
+        return res.render('search-results')
     }
 }
 
