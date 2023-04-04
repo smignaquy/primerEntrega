@@ -8,7 +8,7 @@
   --dark-blue: #03264C;
   --light-blue: #1259c3;
   --gray: #484747;
-  --light-gray: #a7a4a4;
+  --light-gray: #c3c0c0;
   --green: #39b54a;
   --base-font-family: 'Roboto', sans-serif
 }
@@ -140,10 +140,11 @@ hr {
   border: 0px;
   cursor: pointer;
   font-size: 1em;
+  color: #ffffff;
 }
 
 .logout:hover{
-  color: #ffffff;
+  color: #1259c3;
 }
 
 .left-navbar a,
