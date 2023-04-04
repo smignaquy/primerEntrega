@@ -7,8 +7,8 @@
   --yellow: #001B40;
   --dark-blue: #03264C;
   --light-blue: #1259c3;
-  --gray: #666666;
-  --light-gray: #ebebeb;
+  --gray: #484747;
+  --light-gray: #a7a4a4;
   --green: #39b54a;
   --base-font-family: 'Roboto', sans-serif
 }
@@ -157,10 +157,8 @@ hr {
 
 /*====== Banner ======*/
 .banner {
-  /* background-image: url('/images/img_banner.jpeg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center; */
+  /* display:flex;
+  fle */
   overflow: hidden
 }
 .banner img {
