@@ -21,7 +21,11 @@ let productController = {
     },
 
     search: function(req, res){
-        return res.render('search-results')
+        return res.render('search-results', buscar = req.query.search)
+    },
+
+    agregar: function(req, res){
+        return res.render('product-add')
     }
 }
 
