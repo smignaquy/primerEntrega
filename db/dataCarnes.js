@@ -3,7 +3,7 @@ let cortesCarnes = {
         {
             nombre : 'Leonel Messi',
             mail : 'leomessi@gmail.com',
-            foto : '/images/users/messi.jpeg'
+            foto : '/images/users/perfil1.png'
         }
     ],
     lista : [
@@ -14,24 +14,31 @@ let cortesCarnes = {
         imagen : '/images/products/bola-de-lomo.jpg',
         comentarios : [
             {nombre: 'Juan Perez',
+            foto : '/images/users/perfil1.png',
             comentario: 'Excelente'
             }, 
             {nombre: 'Jorge Paez',
+            foto : '/images/users/perfil2.png',
             comentario: 'Muy bueno'
             }, 
             {nombre: 'Federico Jorbe',
+            foto : '/images/users/perfil3.png',
             comentario: 'Bien jugosa, muy buena'
             },
             {nombre: 'Manuel Zimmerman',
+            foto : '/images/users/perfil1.png',
             comentario: 'De muy alta calidad'
             },
             {nombre: 'Tomas Legarre Matera',
+            foto : '/images/users/perfil2.png',
             comentario: 'Exclenete compra, la repetiria'
             },
             {nombre: 'Lorenzo Anino',
-            comentario: 'Super recomendablee, increible corte'
+            foto : '/images/users/perfil3.png',
+            comentario: 'Super recomendable, increible corte'
             },
             {nombre: 'Rodrigo De Paul',
+            foto : '/images/users/perfil1.png',
             comentario: 'De los mejores que probe'
             },
         ]
@@ -43,24 +50,31 @@ let cortesCarnes = {
         imagen : '/images/products/chorizo.jpg',
         comentarios : [
             {nombre: 'Juan Perez',
+            foto : '/images/users/perfil1.png',
             comentario: 'Excelente'
             }, 
             {nombre: 'Jorge Paez',
+            foto : '/images/users/perfil2.png',
             comentario: 'Muy bueno'
             }, 
             {nombre: 'Federico Jorbe',
+            foto : '/images/users/perfil3.png',
             comentario: 'Bien jugosa, muy buena'
             },
             {nombre: 'Manuel Zimmerman',
+            foto : '/images/users/perfil1.png',
             comentario: 'De muy alta calidad'
             },
             {nombre: 'Tomas Legarre Matera',
+            foto : '/images/users/perfil2.png',
             comentario: 'Exclenete compra, la repetiria'
             },
-            {nombre: 'Lorenzo Anino Jorbe',
-            comentario: 'Super recomendablee, increible corte'
+            {nombre: 'Lorenzo Anino',
+            foto : '/images/users/perfil3.png',
+            comentario: 'Super recomendable, increible corte'
             },
             {nombre: 'Rodrigo De Paul',
+            foto : '/images/users/perfil1.png',
             comentario: 'De los mejores que probe'
             },
         ]
@@ -72,24 +86,31 @@ let cortesCarnes = {
         imagen : '/images/products/entrania.jpg',
         comentarios : [
             {nombre: 'Juan Perez',
+            foto : '/images/users/perfil1.png',
             comentario: 'Excelente'
             }, 
             {nombre: 'Jorge Paez',
+            foto : '/images/users/perfil2.png',
             comentario: 'Muy bueno'
             }, 
             {nombre: 'Federico Jorbe',
+            foto : '/images/users/perfil3.png',
             comentario: 'Bien jugosa, muy buena'
             },
             {nombre: 'Manuel Zimmerman',
+            foto : '/images/users/perfil1.png',
             comentario: 'De muy alta calidad'
             },
             {nombre: 'Tomas Legarre Matera',
+            foto : '/images/users/perfil2.png',
             comentario: 'Exclenete compra, la repetiria'
             },
-            {nombre: 'Lorenzo Anino Jorbe',
-            comentario: 'Super recomendablee, increible corte'
+            {nombre: 'Lorenzo Anino',
+            foto : '/images/users/perfil3.png',
+            comentario: 'Super recomendable, increible corte'
             },
             {nombre: 'Rodrigo De Paul',
+            foto : '/images/users/perfil1.png',
             comentario: 'De los mejores que probe'
             },
         ]
@@ -101,24 +122,31 @@ let cortesCarnes = {
         imagen : '/images/products/picania.jpg',
         comentarios : [
             {nombre: 'Juan Perez',
+            foto : '/images/users/perfil1.png',
             comentario: 'Excelente'
             }, 
             {nombre: 'Jorge Paez',
+            foto : '/images/users/perfil2.png',
             comentario: 'Muy bueno'
             }, 
             {nombre: 'Federico Jorbe',
+            foto : '/images/users/perfil3.png',
             comentario: 'Bien jugosa, muy buena'
             },
             {nombre: 'Manuel Zimmerman',
+            foto : '/images/users/perfil1.png',
             comentario: 'De muy alta calidad'
             },
             {nombre: 'Tomas Legarre Matera',
+            foto : '/images/users/perfil2.png',
             comentario: 'Exclenete compra, la repetiria'
             },
-            {nombre: 'Lorenzo Anino Jorbe',
-            comentario: 'Super recomendablee, increible corte'
+            {nombre: 'Lorenzo Anino',
+            foto : '/images/users/perfil3.png',
+            comentario: 'Super recomendable, increible corte'
             },
             {nombre: 'Rodrigo De Paul',
+            foto : '/images/users/perfil1.png',
             comentario: 'De los mejores que probe'
             },
         ]
@@ -130,24 +158,31 @@ let cortesCarnes = {
         imagen : '/images/products/tira-de-asado.jpg',
         comentarios : [
             {nombre: 'Juan Perez',
+            foto : '/images/users/perfil1.png',
             comentario: 'Excelente'
             }, 
             {nombre: 'Jorge Paez',
+            foto : '/images/users/perfil2.png',
             comentario: 'Muy bueno'
             }, 
             {nombre: 'Federico Jorbe',
+            foto : '/images/users/perfil3.png',
             comentario: 'Bien jugosa, muy buena'
             },
             {nombre: 'Manuel Zimmerman',
+            foto : '/images/users/perfil1.png',
             comentario: 'De muy alta calidad'
             },
             {nombre: 'Tomas Legarre Matera',
+            foto : '/images/users/perfil2.png',
             comentario: 'Exclenete compra, la repetiria'
             },
-            {nombre: 'Lorenzo Anino Jorbe',
-            comentario: 'Super recomendablee, increible corte'
+            {nombre: 'Lorenzo Anino',
+            foto : '/images/users/perfil3.png',
+            comentario: 'Super recomendable, increible corte'
             },
             {nombre: 'Rodrigo De Paul',
+            foto : '/images/users/perfil1.png',
             comentario: 'De los mejores que probe'
             },
         ]
@@ -159,24 +194,31 @@ let cortesCarnes = {
         imagen : '/images/products/morcilla.jpg',
         comentarios : [
             {nombre: 'Juan Perez',
+            foto : '/images/users/perfil1.png',
             comentario: 'Excelente'
             }, 
             {nombre: 'Jorge Paez',
+            foto : '/images/users/perfil2.png',
             comentario: 'Muy bueno'
             }, 
             {nombre: 'Federico Jorbe',
+            foto : '/images/users/perfil3.png',
             comentario: 'Bien jugosa, muy buena'
             },
             {nombre: 'Manuel Zimmerman',
+            foto : '/images/users/perfil1.png',
             comentario: 'De muy alta calidad'
             },
             {nombre: 'Tomas Legarre Matera',
+            foto : '/images/users/perfil2.png',
             comentario: 'Exclenete compra, la repetiria'
             },
-            {nombre: 'Lorenzo Anino Jorbe',
-            comentario: 'Super recomendablee, increible corte'
+            {nombre: 'Lorenzo Anino',
+            foto : '/images/users/perfil3.png',
+            comentario: 'Super recomendable, increible corte'
             },
             {nombre: 'Rodrigo De Paul',
+            foto : '/images/users/perfil1.png',
             comentario: 'De los mejores que probe'
             },
         ]
@@ -188,24 +230,31 @@ let cortesCarnes = {
         imagen : '/images/products/bife-de-chorizo.jpg',
         comentarios : [
             {nombre: 'Juan Perez',
+            foto : '/images/users/perfil1.png',
             comentario: 'Excelente'
             }, 
             {nombre: 'Jorge Paez',
+            foto : '/images/users/perfil2.png',
             comentario: 'Muy bueno'
             }, 
             {nombre: 'Federico Jorbe',
+            foto : '/images/users/perfil3.png',
             comentario: 'Bien jugosa, muy buena'
             },
             {nombre: 'Manuel Zimmerman',
+            foto : '/images/users/perfil1.png',
             comentario: 'De muy alta calidad'
             },
             {nombre: 'Tomas Legarre Matera',
+            foto : '/images/users/perfil2.png',
             comentario: 'Exclenete compra, la repetiria'
             },
-            {nombre: 'Lorenzo Anino Jorbe',
-            comentario: 'Super recomendablee, increible corte'
+            {nombre: 'Lorenzo Anino',
+            foto : '/images/users/perfil3.png',
+            comentario: 'Super recomendable, increible corte'
             },
             {nombre: 'Rodrigo De Paul',
+            foto : '/images/users/perfil1.png',
             comentario: 'De los mejores que probe'
             },
         ]
@@ -217,24 +266,31 @@ let cortesCarnes = {
         imagen : '/images/products/vacio.jpg',
         comentarios : [
             {nombre: 'Juan Perez',
+            foto : '/images/users/perfil1.png',
             comentario: 'Excelente'
             }, 
             {nombre: 'Jorge Paez',
+            foto : '/images/users/perfil2.png',
             comentario: 'Muy bueno'
             }, 
             {nombre: 'Federico Jorbe',
+            foto : '/images/users/perfil3.png',
             comentario: 'Bien jugosa, muy buena'
             },
             {nombre: 'Manuel Zimmerman',
+            foto : '/images/users/perfil1.png',
             comentario: 'De muy alta calidad'
             },
             {nombre: 'Tomas Legarre Matera',
+            foto : '/images/users/perfil2.png',
             comentario: 'Exclenete compra, la repetiria'
             },
-            {nombre: 'Lorenzo Anino Jorbe',
-            comentario: 'Super recomendablee, increible corte'
+            {nombre: 'Lorenzo Anino',
+            foto : '/images/users/perfil3.png',
+            comentario: 'Super recomendable, increible corte'
             },
             {nombre: 'Rodrigo De Paul',
+            foto : '/images/users/perfil1.png',
             comentario: 'De los mejores que probe'
             },
         ]

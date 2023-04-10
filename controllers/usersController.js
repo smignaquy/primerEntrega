@@ -2,7 +2,7 @@ let db = require("../db/dataCarnes");
 
 let usersController = {
     profile : function(req, res) {
-        res.render('profile', {user: db.usuarios[0]})
+        res.render('profile', {user: db.usuarios[0], info : db.lista})
     },
     register: function(req, res){
         res.render('register')
