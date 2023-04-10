@@ -17,7 +17,7 @@ let productController = {
                 resultado.push(info[i])
             } 
         }
-        return res.render('product', {nombre : resultado[0].nombre, imagen : resultado[0].imagen, descripcion : resultado[0].descripcion})
+        return res.render('product', {id : resultado[0].id, nombre : resultado[0].nombre, imagen : resultado[0].imagen, descripcion : resultado[0].descripcion, comentarios : resultado[0].comentarios})
     },
 
     search: function(req, res){
@@ -25,7 +25,7 @@ let productController = {
     },
 
     agregar: function(req, res){
-        return res.render('product-add')
+        return res.render('product-add', {user : db.usuarios[0]})
     }
 }
 
