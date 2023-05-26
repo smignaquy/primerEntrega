@@ -15,42 +15,48 @@
 				<h2 class="products-title">Registrate</h2>
 			</div>
 			<!-- Show the "ultimos" products -->
-			<form action="/users" method="GET">
-				<label>Mail: </label>
-				<input type="email" name="email" value="">
-		
+			
+			<form action="" method="POST">
+				<label>Email: </label>
+				<input type="email" name="email" required>
 				<br>
 				<br>
 		
 				<label>Contraseña: </label>
-				<input type="password" name="contraseña" value="">
+				<input type="password" name="password" required minlength="3">
 		
 				<br>
 				<br>
 		
 				<label>Usuario: </label>
-				<input type="text" name="usuario" value="">
+				<input type="text" name="usuario" required>
+				
 				<br>
 				<br>
 
 				<label>Fecha de Nacimiento: </label>
-				<input type="date" name="fecha" value="">
+				<input type="date" name="fechaNacimiento" value="">
+				
 				<br>
 				<br>
+				
 				<label>Numero de Documento: </label>
-				<input type="number" name="documento">
+				<input type="number" name="dni" required>
+				
 				<br>
 				<br>
+				
 				<label>Foto de Perfil: </label>
 				<input type="text" name="fotoPerfil" value="">
+				
 				<br>
 				<br>
 
 				<button type="submit">Enviar</button>
 		
-		
-		
 			</form>
+
+			
 
 
 	<!-- footer -->
