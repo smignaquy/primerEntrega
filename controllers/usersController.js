@@ -28,11 +28,11 @@ let usersController = {
         //     error = 'El nombre de usuario esta incompleto'}
         // for (let i = 0; i)
         
-        let filtro = {
-            where: [{
-                email: user.email
-            }]
-        }
+        // let filtro = {
+        //     where: [{
+        //         email: user.email
+        //     }]
+        // }
         
         // models.Usuario.findOne(filtro) 
         //     .then(resultado) => {
@@ -44,13 +44,15 @@ let usersController = {
 
 
         models.Usuario.create(user)
-            .then(function(usuarioCreado){
-                console.log(usuarioCreado);
+            .then(function(){
+                console.log();
                 // return res.redirect('/edit')
             })
             .catch(function(error){
                 console.log(error);
             })
+            
+        return res.redirect('/home')
     },
 
     login: function(req, res){
