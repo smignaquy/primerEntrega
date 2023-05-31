@@ -11,8 +11,8 @@ let usersController = {
     },
     store:  function(req, res){
         let form = req.body
-
-        let user = {
+        
+        let newUser = {
             email : form.email,
             password : form.password,
             nombre_usuario: form.usuario,
@@ -20,6 +20,32 @@ let usersController = {
             dni : form.dni,
             foto_perfil : form.fotoPerfil
         };
+        
+        models.Usuario.findOne({
+            where: [{
+                email : newUser.email
+            }]
+        }) 
+        .then (function(user){
+            // return res.send(user)
+
+            if (user){
+               return res.send('el usuario ya existe')
+            } else {
+                models.Usuario.create(newUser)
+                .then(function(){
+                    console.log();
+                    // return res.redirect('/edit')
+                    return res.redirect('/home')
+                })
+                .catch(function(error){
+                    console.log(error);
+                })
+            }
+        })
+        
+
+
         // if (user.email == ''){
         //     error = 'El email esta incompleto'
         // // } else if (user.email){
@@ -43,16 +69,9 @@ let usersController = {
 
 
 
-        models.Usuario.create(user)
-            .then(function(){
-                console.log();
-                // return res.redirect('/edit')
-            })
-            .catch(function(error){
-                console.log(error);
-            })
+
             
-        return res.redirect('/home')
+        
     },
 
     login: function(req, res){
