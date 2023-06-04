@@ -6,10 +6,10 @@ let usersController = require('../controllers/usersController')
 router.get('/', usersController.profile);
 
 router.get('/register', usersController.register);
-
 router.post('/register', usersController.store);
 
 router.get('/login', usersController.login);
+router.post('/login', usersController.procesarLogin)
 
 router.get('/edit', usersController.edit);
 

@@ -1,5 +1,6 @@
 let db = require("../db/dataCarnes");
 let models = require('../database/models')
+let bcrypt = require('bcryptjs')
 
 
 let usersController = {
@@ -14,7 +15,7 @@ let usersController = {
         
         let newUser = {
             email : form.email,
-            password : form.password,
+            password : bcrypt.hashSync(form.password, 10),
             nombre_usuario: form.usuario,
             fecha : form.fechaNacimiento,
             dni : form.dni,
@@ -42,41 +43,44 @@ let usersController = {
                     console.log(error);
                 })
             }
-        })
-        
-
-
-        // if (user.email == ''){
-        //     error = 'El email esta incompleto'
-        // // } else if (user.email){
-        // //     error = 'El email de usuario ya esta registrado'
-        // } else if (user.name == ''){
-        //     error = 'El nombre de usuario esta incompleto'}
-        // for (let i = 0; i)
-        
-        // let filtro = {
-        //     where: [{
-        //         email: user.email
-        //     }]
-        // }
-        
-        // models.Usuario.findOne(filtro) 
-        //     .then(resultado) => {
-        //         if (resultado == ''){
-                    
-        //         }
-        //     }
-
-
-
-
-            
-        
+        })      
     },
 
     login: function(req, res){
         return res.render('login')
     },
+
+    procesarLogin: function(req,res){
+        let form = req.body
+        // let userLogin = {
+        //     password : bcrypt.hashSync(form.password, 10),
+        //     nombre_usuario: form.usuario,
+        // };
+        let filtro = {
+            where: [{
+                nombre_usuario: form.usuario
+            }]
+        };
+        models.Usuario.findOne(filtro)
+            .then((resultado)=>{
+                if (resultado) {
+                    let comparacion = bcrypt.compareSync(form.password, resultado.password)
+                    if (comparacion){
+                        return res.redirect('/users')
+                    }
+                    else{
+                        error = '¡El nombre de usuario existe pero la contraseña es incorrecta!'
+                        res.locals.errors = error
+                        return res.render('login')
+                    }}
+                })
+            .catch(function(error){
+                console.log(error);
+            })
+            
+
+    },
+
     edit: function(req, res){
         return res.render('profile-edit', {user: db.usuarios[0]})
     }

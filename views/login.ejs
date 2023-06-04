@@ -7,31 +7,37 @@
 	<!-- Header -->
 	<%- include('./partials/header') %>
 	<!-- /Header -->
+	<article>
+		<% if (locals.errors) { %>
+			<p class="errorMsj"> <%= locals.errors %> </p>
+		<% } %>
+	
+		<div class="container products-wrapper">
+			<div class="row">
+				<div class="col-12">
+					<h2 class="products-title">Ingresar</h2>
+				</div>
+			
+			<form action="" method="POST">	
+				<label>Usuario: </label>
+				<input type="text" name="usuario" value="">
+				<br>
+				<br>
 
-	<div class="container products-wrapper">
-		<div class="row">
-			<div class="col-12">
-				<h2 class="products-title">Ingresar</h2>
-			</div>
-		
-		<form action="/users" method="GET">	
-			<label>Usuario: </label>
-			<input type="text" name="usuario" value="">
-			<br>
-			<br>
+				<label>Contraseña: </label>
+				<input type="password" name="password" value="">
+				<br>
+				<br>
+					
+				<label>Recordarme: </label>
+				<input type="checkbox" name="recordarme" value="">
+				<br>
+				<br>
 
-			<label>Contraseña: </label>
-			<input type="password" name="contraseña" value="">
-			<br>
-			<br>
-				
-			<label>Recordarme: </label>
-			<input type="checkbox" name="recordarme" value="">
-			<br>
-			<br>
+				<button type="submit">Enviar</button>
+			</form>
 
-			<button type="submit">Enviar</button>
-		</form>
+	</article>
 
 	<!-- footer -->
 	<%- include('./partials/footer') %>

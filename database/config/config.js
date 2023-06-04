@@ -4,7 +4,7 @@ module.exports = {
     "password": 'root',
     "database": "primerEntrega",
     "host": "127.0.0.1",
-    "port": '8889', // puerto del mamp
+    // "port": '80', // puerto del mamp
     "dialect": "mysql"
   },
   "test": {

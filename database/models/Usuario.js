@@ -8,12 +8,12 @@ module.exports = function(sequelize, dataTypes){
             autoIncrement: true
         },
         email : {
-            type : dataTypes.STRING(50),
+            type : dataTypes.STRING(255),
             unique : true,
             allowNull: false
         },
         password : {
-            type: dataTypes.STRING(50),
+            type: dataTypes.STRING(255),
             allowNull : false
         },
         nombre_usuario : {
@@ -22,7 +22,7 @@ module.exports = function(sequelize, dataTypes){
             allowNull: false
         },
         foto_perfil : {
-            type : dataTypes.STRING(50),
+            type : dataTypes.STRING(255),
             allowNull: false
         },
         fecha : {
