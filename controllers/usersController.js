@@ -2,6 +2,7 @@ let db = require("../db/dataCarnes");
 let models = require('../database/models')
 let bcrypt = require('bcryptjs')
 
+let errors = {}
 
 let usersController = {
     profile : function(req, res) {
@@ -56,6 +57,10 @@ let usersController = {
         //     password : bcrypt.hashSync(form.password, 10),
         //     nombre_usuario: form.usuario,
         // };
+        // req.session.usuario = {
+        //     email: form.email,
+        //     userName: form.usuario
+        // }
         let filtro = {
             where: [{
                 nombre_usuario: form.usuario
@@ -69,15 +74,26 @@ let usersController = {
                         return res.redirect('/users')
                     }
                     else{
-                        error = '¡El nombre de usuario existe pero la contraseña es incorrecta!'
-                        res.locals.errors = error
+                        errors.message = '¡El nombre de usuario existe pero la contraseña es incorrecta!'
+                        res.locals.errors = errors;
                         return res.render('login')
-                    }}
+                    }
+                } else {
+                    errors.message = '¡El nombre de usuario no existe!'
+                    res.locals.errors = errors;
+                    return res.render('login')
+                    }
                 })
             .catch(function(error){
                 console.log(error);
             })
             
+            //preguntar si el usuario tildo el checkbox para recordsrlo
+            //return res.send(req.body);
+            if (req.body.recordarme != undefined){
+                //si lo tildo: 
+                res.cookie('cookieEspecial', 'el dato que quiero guardar', {maxAge: 100*60*123123123})
+            }
 
     },
 
