@@ -34,7 +34,7 @@
                 <!-- solo logueado <li><a href="">Cargar productos</a></li> -->
             </ul>
 
-            <ul class="right-navbar">
+            <!-- <ul class="right-navbar"> -->
                 <!-- Solo logueado <li><a href="profile.html">
                         Nombre del usuario <i class="fas fa-user"></i>
                     </a>
@@ -46,13 +46,37 @@
                         </button>
                     </form>
                 </li> -->
-                <li>
+                <% if (locals.Usuario != undefined){ %>
+                    <ul class="right-navbar">
+                        <li><a href="/users">
+                            <%= locals.Usuario.nombre %> <i class="fas fa-user"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <form action="/users/logout" method="POST">
+                                <button class="logout" type="submit">
+                                    Cerrar sesión <i class="fas fa-sign-in-alt"></i>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                <% } else {%>
+                    <ul class="right-navbar">
+                        <li>
+                            <a href="/users/register">Creá tu cuenta <i class="far fa-address-card"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/users/login">Ingresá <i class="fas fa-sign-in-alt"></i></a></li>
+                    </ul>
+                <% } %>
+                <!-- <li>
                     <a href="/users/register">Creá tu cuenta <i class="far fa-address-card"></i>
                     </a>
                 </li>
                 <li>
                     <a href="/users/login">Ingresá <i class="fas fa-sign-in-alt"></i></a>
-                </li>
+                </li> -->
             </ul>
         </nav>
     </div>

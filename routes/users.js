@@ -13,4 +13,6 @@ router.post('/login', usersController.procesarLogin)
 
 router.get('/edit', usersController.edit);
 
+router.post('/logout', usersController.logout)
+
 module.exports = router;

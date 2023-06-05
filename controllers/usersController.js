@@ -6,7 +6,7 @@ let errors = {}
 
 let usersController = {
     profile : function(req, res) {
-        res.render('profile', {user: db.usuarios[0], info : db.lista})
+        res.render('profile', {info : db.lista})//user: db.usuarios[0], info : db.lista})
     },
     register: function(req, res){
         res.render('register')
@@ -57,10 +57,7 @@ let usersController = {
         //     password : bcrypt.hashSync(form.password, 10),
         //     nombre_usuario: form.usuario,
         // };
-        // req.session.usuario = {
-        //     email: form.email,
-        //     userName: form.usuario
-        // }
+        
         let filtro = {
             where: [{
                 nombre_usuario: form.usuario
@@ -71,6 +68,16 @@ let usersController = {
                 if (resultado) {
                     let comparacion = bcrypt.compareSync(form.password, resultado.password)
                     if (comparacion){
+                        req.session.Usuario = {
+                            email: resultado.email,
+                            nombre: resultado.nombre_usuario,
+                            foto: resultado.foto_perfil,
+                            password: resultado.password,
+                            dni: resultado.dni,
+                            fecha: resultado.fecha
+                        }
+                        res.locals.Usuario = req.session.Usuario
+                        //return res.send(res.locals.Usuario)
                         return res.redirect('/users')
                     }
                     else{
@@ -94,11 +101,18 @@ let usersController = {
                 //si lo tildo: 
                 res.cookie('cookieEspecial', 'el dato que quiero guardar', {maxAge: 100*60*123123123})
             }
-
+            //console.log(req.session.Usuario)
     },
 
     edit: function(req, res){
         return res.render('profile-edit', {user: db.usuarios[0]})
+    },
+    logout: function(req,res){
+            //destruir session
+            req.session.destroy()
+
+            //Destruyo la cookie
+            return res.redirect('/home')
     }
 }
 

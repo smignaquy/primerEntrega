@@ -4,4 +4,5 @@ let indexController = require('../controllers/indexController')
 
 router.get('/home', indexController.home);
 
+
 module.exports = router;
