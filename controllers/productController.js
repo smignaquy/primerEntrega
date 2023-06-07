@@ -3,8 +3,22 @@ let models = require('../database/models')
 
 let productController = {
     index : function(req, res){
-            return res.render('productos', {info : db.lista}
-        )},
+            //return res.render('productos', {info : db.lista}
+            models.Producto.findAll()
+            .then(function(productos){
+                req.session.Producto = {
+                    nombre: productos.nombre,
+                    descripcion: productos.descripcion,
+                    usuario: productos.usuario_id,
+                    fecha_carga: productos.createdAt,
+                }
+                res.locals.Producto = req.session.Producto
+                return res.render('productos', {info: locals.Producto});
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+        },
 
     todosProductos: function(req, res){
             return res.render('productos', {info : db.lista}
@@ -27,6 +41,27 @@ let productController = {
 
     agregar: function(req, res){
         return res.render('product-add', {user : db.usuarios[0]})
+    },
+    //CHEQUEAR
+    processAgregar: function(req, res){
+        let form = req.body
+
+        let newProduct = {
+            nombre : form.nombre,
+            imagen : form.imagen,
+            nombre_usuario: form.usuario,
+            fecha_carga : form.fecha,
+        };
+        
+        models.Usuario.create(newUser)
+        .then(function(){
+                //console.log();
+                // return res.redirect('/edit')
+                return res.redirect('/home')
+            })
+            .catch(function(error){
+                console.log(error);
+        })  
     }
 }
 

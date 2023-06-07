@@ -97,10 +97,10 @@ let usersController = {
             
             //preguntar si el usuario tildo el checkbox para recordsrlo
             //return res.send(req.body);
-            if (req.body.recordarme != undefined){
-                //si lo tildo: 
-                res.cookie('cookieEspecial', 'el dato que quiero guardar', {maxAge: 100*60*123123123})
-            }
+        if (req.body.recordarme != undefined){
+            //si lo tildo: 
+            res.cookie('Recordarme', 'usuario', {maxAge: 100*60*123123123})
+        }
             //console.log(req.session.Usuario)
     },
 

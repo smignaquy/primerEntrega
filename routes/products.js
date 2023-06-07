@@ -7,6 +7,7 @@ let productController = require('../controllers/productController')
 router.get('/todos', productController.todosProductos);
 
 router.get('/cargar', productController.agregar);
+router.post('/cargar', productController.processAgregar);
 
 router.get('/id/:id', productController.product);
 
