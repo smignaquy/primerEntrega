@@ -19,16 +19,16 @@
 				<h2 class="products-title">Todos los Productos:</h2>
 			</div>
 			<!-- Show the "ultimos" products -->
-			<% for (let i = 0; i < info.length; i++){ %>
+			<% for (let i = 0; i < locals.Producto.length; i++){ %>
 				<div class="col-12 col-sm-6 col-lg-3">
 					<section class="product-box">
-						<a href="/productos/id/<%= info[i].id %>">
+						<a href="/productos/id/<%= locals.Producto[i].id %>">
 							<figure class="product-box_image">
-								<img src=" <%= info[i].imagen %> " alt=" <%= info[i].nombre %> ">
+								<img src=" <%= locals.Producto[i].imagen %> " alt=" <%= locals.Producto[i].nombre %> ">
 							</figure>
 							<article class="product-box_data">
-								<h2> <%= info[i].nombre %> </h2>
-								<p> <%= info[i].descripcion %> </p>
+								<h2> <%= locals.Producto[i].nombre %> </h2>
+								<p> <%= locals.Producto[i].descripcion %> </p>
 								<p>Comentarios: 12</p>
 							</article>
 						</a>

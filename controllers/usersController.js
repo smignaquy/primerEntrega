@@ -32,7 +32,7 @@ let usersController = {
             // return res.send(user)
 
             if (user){
-               return res.send('el usuario ya existe')
+               return res.send('El usuario ya existe')
             } else {
                 models.Usuario.create(newUser)
                 .then(function(){
@@ -69,6 +69,7 @@ let usersController = {
                     let comparacion = bcrypt.compareSync(form.password, resultado.password)
                     if (comparacion){
                         req.session.Usuario = {
+                            id: resultado.id,
                             email: resultado.email,
                             nombre: resultado.nombre_usuario,
                             foto: resultado.foto_perfil,

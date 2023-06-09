@@ -13,6 +13,9 @@ module.exports = function(sequelize, dataTypes){ //sequelize tiene metodos de se
         descripcion: {
             type: dataTypes.STRING
         },
+        foto: {
+            type: dataTypes.STRING
+        },
         usuario_id: {
             type: dataTypes.INTEGER
         },
@@ -22,9 +25,8 @@ module.exports = function(sequelize, dataTypes){ //sequelize tiene metodos de se
         updatedAt:{
             type: dataTypes.DATE
         }
-    }
-    let conf = {
-    }
+    };
+    let conf = {};
 
     let producto = sequelize.define(alias, cols, conf);
 

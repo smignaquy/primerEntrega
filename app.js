@@ -33,7 +33,8 @@ app.use(function(req, res, next){
   if (req.session.Usuario != undefined){
     res.locals.Usuario = req.session.Usuario
   }
-  console.log(res.locals.Usuario)
+  res.locals.Producto = req.session.Producto
+  //console.log(res.locals.Usuario)
   return next();
 })
 

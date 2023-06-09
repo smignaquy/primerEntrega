@@ -13,7 +13,7 @@ let productController = {
                     fecha_carga: productos.createdAt,
                 }
                 res.locals.Producto = req.session.Producto
-                return res.render('productos', {info: locals.Producto});
+                return res.render('productos');//{info: locals.Producto}
             })
             .catch(function(error){
                 console.log(error);
@@ -21,8 +21,30 @@ let productController = {
         },
 
     todosProductos: function(req, res){
-            return res.render('productos', {info : db.lista}
-        )},
+        productos = [];
+        //return res.render('productos', {info : db.lista}
+        models.Producto.findAll()
+            .then(function(producto){
+                for(let i=0; i<producto.length; i++){
+                    productos.push({
+                        id: producto[i].id,
+                        nombre: producto[i].nombre,
+                        descripcion: producto[i].descripcion,
+                        foto: producto[i].foto,
+                        usuario_id: producto[i].usuario_id,
+                        fecha_carga: producto[i].createdAt,
+                    })
+                    req.session.Producto = productos;
+                }
+                res.locals.Producto = req.session.Producto
+                //console.log(req.session.Producto)
+                //return res.send(producto)
+                return res.render('productos');
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+    },
 
     product: function(req, res){
         let resultado = []
@@ -48,19 +70,19 @@ let productController = {
 
         let newProduct = {
             nombre : form.nombre,
-            imagen : form.imagen,
-            nombre_usuario: form.usuario,
-            fecha_carga : form.fecha,
+            descripcion: form.descripcion,
+            foto : form.imagen,
+            usuario_id : req.session.Usuario.id,
         };
         
-        models.Usuario.create(newUser)
+        //return res.send(newProduct)
+        models.Producto.create(newProduct)
         .then(function(){
-                //console.log();
-                // return res.redirect('/edit')
-                return res.redirect('/home')
-            })
-            .catch(function(error){
-                console.log(error);
+            console.log();
+            return res.redirect('/home')
+        })
+        .catch(function(error){
+            console.log(error);
         })  
     }
 }

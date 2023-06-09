@@ -16,13 +16,7 @@
 				<h2 class="products-title">Agregar productos</h2>
 			</div>
 			<!-- Show the "ultimos" products -->
-			<form action="/cargar" method="POST">
-				<label>Imagen del producto </label>
-				<input type="file" name="imagen" value="">
-		
-				<br>
-				<br>
-		
+			<form action="/productos/cargar" method="POST">		
 				<label>Nombre del producto: </label>
 				<input type="text" name="nombre" value="">
 		
@@ -30,7 +24,12 @@
 				<br>
 		
 				<label>Descripción: </label>
-				<input type="text" name="usuario" value="">
+				<input type="text" name="descripcion" value="">
+				<br>
+				<br>
+				<label>Imagen del producto </label>
+				<input type="text" name="imagen" value="">
+		
 				<br>
 				<br>
 
