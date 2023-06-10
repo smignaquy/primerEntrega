@@ -6,7 +6,7 @@ let errors = {}
 
 let usersController = {
     profile : function(req, res) {
-        res.render('profile', {info : db.lista})//user: db.usuarios[0], info : db.lista})
+        res.render('profile')//user: db.usuarios[0], info : db.lista})
     },
     register: function(req, res){
         res.render('register')
@@ -78,7 +78,11 @@ let usersController = {
                             fecha: resultado.fecha
                         }
                         res.locals.Usuario = req.session.Usuario
-                        //return res.send(res.locals.Usuario)
+                        // return res.send(res.locals.Usuario)
+                            if (req.body.recordarme != undefined){
+                                //si lo tildo: 
+                                res.cookie('Recordarme', resultado.id, {maxAge: 100*60*123123123})
+                            }
                         return res.redirect('/users')
                     }
                     else{
@@ -98,10 +102,7 @@ let usersController = {
             
             //preguntar si el usuario tildo el checkbox para recordsrlo
             //return res.send(req.body);
-        if (req.body.recordarme != undefined){
-            //si lo tildo: 
-            res.cookie('Recordarme', 'usuario', {maxAge: 100*60*123123123})
-        }
+        
             //console.log(req.session.Usuario)
     },
 

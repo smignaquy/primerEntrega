@@ -1,19 +1,28 @@
-let db = require("../db/dataCarnes");
+let db = require('../database/models')
+const op = db.Sequelize.Op;
+
 
 
 let searchController = {
     busqueda : function(req, res){
-        // let buscado = req.query.search;
-        // let resultado = []
-        // let info = db.lista
-        // for (let i = 0; i < info.length; i++){
-        //     if (info[i].nombre == buscado){
-        //         resultado.push(info[i])
-        //     }
-        // if (resultado.length > 0){
-        //     return res.render('search-results', {nombre : resultado[0].nombre, imagen : resultado[0].imagen, descripcion : resultado[0].descripcion})
-        // }
-            return res.render('search-results', {buscar : req.query.search})} 
-}
+        let palabraBuscada = req.query.search;
+        let filtro ={
+            where :{
+             [op.or]: [
+               { nombre: { [op.like]: `%${ palabraBuscada}%` } },
+               { descripcion: { [op.like]: `%${ palabraBuscada}%` } }
+             ]
+           },
+        //     include: [ { association: 'user' }],
+            order: [[ "createdAt" , "DESC"]]
+           }
+        // res.send(op)
+        db.Producto.findAll(filtro)
+        .then((resultado)=>{
+            return res.render('search-results', {busqueda : resultado, palabraBuscada})
+        }).catch((error)=>{
+            console.log(error)
+        })
+}}
 
 module.exports = searchController;

@@ -47,14 +47,61 @@ let productController = {
     },
 
     product: function(req, res){
-        let resultado = []
-        let info = db.lista
-        for (let i = 0; i < info.length; i++){
-            if (info[i].id == req.params.id){
-                resultado.push(info[i])
-            } 
-        }
-        return res.render('product', {id : resultado[0].id, nombre : resultado[0].nombre, imagen : resultado[0].imagen, descripcion : resultado[0].descripcion, comentarios : resultado[0].comentarios})
+        id = req.params.id
+        comentarios = db.lista.comentarios
+        
+        // let filtro = {
+        //     where: [{
+        //         id: id
+        //     }]
+        // }
+        //return res.render('productos', {info : db.lista}
+        // let resultado = []
+        // let info = db.lista
+        // for (let i = 0; i < info.length; i++){
+        //     if (info[i].id == id){
+        //         resultado.push(info[i])
+        //     } 
+        //     comentarios = resultado[0].comentarios
+
+        models.Producto.findByPk(id)
+            .then((resultado)=>{
+                resultado.comentarios = db.lista[0].comentarios
+                // return res.send(resultado)
+                // return res.send(resultado)
+                return res.render('product', {id : resultado.id, nombre : resultado.nombre, imagen : resultado.foto, descripcion : resultado.descripcion, comentarios : resultado.comentarios})
+
+            })
+
+                // for(let i=0; i<producto.length; i++){
+                //     productos.push({
+                //         id: producto[i].id,
+                //         nombre: producto[i].nombre,
+                //         descripcion: producto[i].descripcion,
+                //         foto: producto[i].foto,
+                //         usuario_id: producto[i].usuario_id,
+                //         fecha_carga: producto[i].createdAt,
+                //     })
+                //     req.session.Producto = productos;
+                // }
+                // res.locals.Producto = req.session.Producto
+                // //console.log(req.session.Producto)
+                // //return res.send(producto)
+                // // return res.send(res.locals.Producto)
+                // for(let i=0; i<locals.Producto.length; i++){
+                //     if (locals.Producto[i].id == req.params.id){
+                //         return res.send(locals.Producto[i].id)
+                //     }
+                // }
+                
+                // //     resultado.push(locals.Producto[i])
+                // // } 
+                
+                // // return res.render('product', {id : resultado[0].id, nombre : resultado[0].nombre, imagen : resultado[0].imagen, descripcion : resultado[0].descripcion, comentarios : resultado[0].comentarios})
+            .catch(function(error){
+                console.log(error);
+            })
+        
     },
 
     search: function(req, res){
