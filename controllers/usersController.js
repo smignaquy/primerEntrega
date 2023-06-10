@@ -6,7 +6,13 @@ let errors = {}
 
 let usersController = {
     profile : function(req, res) {
-        res.render('profile')//user: db.usuarios[0], info : db.lista})
+        counter = 0
+        for (let i = 0; i < locals.Producto.length; i++){
+            if (locals.Producto.id == req.params.id){
+                counter ++
+            }
+        }
+        res.render('profile', {post: counter})//user: db.usuarios[0], info : db.lista})
     },
     register: function(req, res){
         res.render('register')

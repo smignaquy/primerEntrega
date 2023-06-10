@@ -63,13 +63,38 @@ let productController = {
         //         resultado.push(info[i])
         //     } 
         //     comentarios = resultado[0].comentarios
+        comentarios = []
+        models.Comentario.findAll()
+        .then(function(comentario){
+            for(let i=0; i<comentario.length; i++){
+                for(let i = 0; i < locals.Usuario.length; i++){
+                    if(comentario.usuario_id == locals.Usuario.id){
+                        usuario = locals.Usuario[i].id
+                        nombre_usuario = locals.Usuario[i].nombre
+                        foto_perfil = locals.Usuario[i].foto
+                    }
+                }
+                if (comentario.producto_id == id){
+                    comentarios.push({
+                        id: comentario.id,
+                        usuario_id: usuario,
+                        nombre: nombre_usuario,
+                        foto: foto_perfil
+                    })
+                }
+            }
+        })
+        .catch(function(error){
+            console.log(error);
+        })
+        return res.send(comentarios)
 
         models.Producto.findByPk(id)
             .then((resultado)=>{
                 resultado.comentarios = db.lista[0].comentarios
                 // return res.send(resultado)
                 // return res.send(resultado)
-                return res.render('product', {id : resultado.id, nombre : resultado.nombre, imagen : resultado.foto, descripcion : resultado.descripcion, comentarios : resultado.comentarios})
+                return res.render('product', {id : resultado.id, nombre : resultado.nombre, imagen : resultado.foto, descripcion : resultado.descripcion, comentarios : comentarios})
 
             })
 
