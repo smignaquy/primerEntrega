@@ -49,6 +49,30 @@ let productController = {
     product: function(req, res){
         id = req.params.id
         comentarios = db.lista.comentarios
+        coms = []
+       
+        models.Comentario.findAll({
+            where: [
+                {"producto_id" : req.params.id}
+            ]
+        })
+        .then(function(comentario){
+            return res.send(comentario)
+            // for(let i=0; i < comentario.length; i++){
+            //     coms.push({
+            //         // nombre: usuario_id[i].nombre,
+            //         // foto: usuario_id[i].foto,
+            //         // id: usuario_id[i],
+            //         comment: comentario[i].comentario
+            //     })
+            //     return res.send(coms)
+            // }
+            //return res.render('product', {comentarios : comentario})
+        })
+        .catch(function(error){
+                 console.log(error);
+        })
+
         
         // let filtro = {
         //     where: [{
@@ -63,31 +87,33 @@ let productController = {
         //         resultado.push(info[i])
         //     } 
         //     comentarios = resultado[0].comentarios
-        comentarios = []
-        models.Comentario.findAll()
-        .then(function(comentario){
-            for(let i=0; i<comentario.length; i++){
-                for(let i = 0; i < locals.Usuario.length; i++){
-                    if(comentario.usuario_id == locals.Usuario.id){
-                        usuario = locals.Usuario[i].id
-                        nombre_usuario = locals.Usuario[i].nombre
-                        foto_perfil = locals.Usuario[i].foto
-                    }
-                }
-                if (comentario.producto_id == id){
-                    comentarios.push({
-                        id: comentario.id,
-                        usuario_id: usuario,
-                        nombre: nombre_usuario,
-                        foto: foto_perfil
-                    })
-                }
-            }
-        })
-        .catch(function(error){
-            console.log(error);
-        })
-        return res.send(comentarios)
+        
+        //OTRA FORMA
+        // comentarios = []
+        // models.Comentario.findAll()
+        // .then(function(comentario){
+        //     for(let i=0; i<comentario.length; i++){
+        //         for(let i = 0; i < locals.Usuario.length; i++){
+        //             if(comentario.usuario_id == locals.Usuario.id){
+        //                 usuario = locals.Usuario[i].id
+        //                 nombre_usuario = locals.Usuario[i].nombre
+        //                 foto_perfil = locals.Usuario[i].foto
+        //             }
+        //         }
+        //         if (comentario.producto_id == id){
+        //             comentarios.push({
+        //                 id: comentario.id,
+        //                 usuario_id: usuario,
+        //                 nombre: nombre_usuario,
+        //                 foto: foto_perfil
+        //             })
+        //         }
+        //     }
+        // })
+        // .catch(function(error){
+        //     console.log(error);
+        // })
+        // return res.send(comentarios)
 
         models.Producto.findByPk(id)
             .then((resultado)=>{
