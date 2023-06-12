@@ -65,6 +65,7 @@ let usersController = {
             dni : form.dni,
             foto_perfil : form.fotoPerfil
         };
+        req.session.Usuario = newUser
         
         models.Usuario.findOne({
             where: [{
@@ -81,7 +82,8 @@ let usersController = {
                 .then(function(){
                     console.log();
                     // return res.redirect('/edit')
-                    return res.redirect('/home')
+                    //return res.send(req.session.Usuario)
+                    return res.redirect('/users/id/'+ req.session.Usuario.id)
                 })
                 .catch(function(error){
                     console.log(error);
@@ -126,7 +128,7 @@ let usersController = {
                                 //si lo tildo: 
                                 res.cookie('Recordarme', resultado.id, {maxAge: 100*60*123123123})
                             }
-                        return res.redirect('/users')
+                        return res.redirect('/users/id/' + req.session.Usuario.id)
                     }
                     else{
                         errors.message = '¡El nombre de usuario existe pero la contraseña es incorrecta!'
