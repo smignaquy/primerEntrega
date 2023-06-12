@@ -10,7 +10,7 @@
 	<!-- product detail -->
 	<div class="container products-wrapper">
 		<div class="d-flex align-items-center">
-			<h2 class="products-title"> <%= nombre %> </h2> 
+			<h2 class="products-title"> <%= info.nombre %> </h2> 
 			<p class="product-detail-description">
 				<a href="/productos/cargar">Editar</a>
 			</p>
@@ -18,18 +18,18 @@
 		<div class="product-detail">
 			<div class="row">
 				<article class="col-12 col-lg-8 product-detail-info">
-					<img src="<%= imagen %>" alt="<%= nombre %>" class="product-detail-img">
-					<p class="product-detail-description"> <%= descripcion %> </p>
+					<img src="<%= info.foto %>" alt="<%= info.nombre %>" class="product-detail-img">
+					<p class="product-detail-description"> <%= info.descripcion %> </p>
 				</article>
 				<div class="col-12 col-lg-4">
 					<section class="comments"> 
-						<% for (let i = 0; i < comentarios.length; i++){ %>
+						<% for (let i = 0; i < info.comentarios.length; i++){ %>
 							<article>
-								<img src="<%= comentarios[i].foto  %>" alt="">
+								<img src="<%= info.comentarios[i].usuario.foto_perfil  %>" alt="">
 								<div class="data">
 									<p class="user">
-									<strong> <a href="/users"> <%= comentarios[i].nombre  %> </a> </strong>
-									<%= comentarios[i].comentario  %></p>
+									<strong> <a href="/users/id/<%= info.comentarios[i].usuario.id %>"> <%= info.comentarios[i].usuario.nombre_usuario  %> </a> </strong>
+									<%= info.comentarios[i].comentario  %></p>
 								</div>
 							</article>
 						<% } %>

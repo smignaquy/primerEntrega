@@ -5,17 +5,54 @@ let bcrypt = require('bcryptjs')
 let errors = {}
 
 let usersController = {
-    profile : function(req, res) {
-        counter = 0
-        for (let i = 0; i < locals.Producto.length; i++){
-            if (locals.Producto.id == req.params.id){
-                counter ++
-            }
-        }
-        res.render('profile', {post: counter})//user: db.usuarios[0], info : db.lista})
+    profile : function(req, res){
+        let productos = [];
+        let filter = {
+            where: [{
+                usuario_id: req.params.id
+            }]
+        };
+        models.Producto.findAll(filter)
+        .then(function(producto){
+            for(let i=0; i<producto.length; i++){
+                productos.push({
+                    id: producto[i].id,
+                    nombre: producto[i].nombre,
+                    descripcion: producto[i].descripcion,
+                    foto: producto[i].foto,
+                    usuario_id: producto[i].usuario_id,
+                    fecha_carga: producto[i].createdAt,
+                })
+                //return productos
+                }})
+            
+        let filtro = {
+            where: [{
+                id: req.params.id
+            }]
+        };
+        models.Usuario.findOne(filtro)
+        .then(function(usuario){
+            let cantidad = productos.length;
+            // usuario.cantidad = productos.length;
+            // return res.send(usuario)
+            return res.render('profile', {info: usuario, producto: productos, cant: cantidad})
+            })
+        .catch(function(error){
+            console.log(error);
+        })
+        
+
+        // counter = 0
+        // for (let i = 0; i < locals.Producto.length; i++){
+        //     if (locals.Producto.id == req.params.id){
+        //         counter ++
+        //     }
+        // }
+        // res.render('profile', {user: db.usuarios[0], info : db.lista, post: counter})//user: db.usuarios[0], info : db.lista})
     },
     register: function(req, res){
-        res.render('register')
+        return res.render('register')
     },
     store:  function(req, res){
         let form = req.body

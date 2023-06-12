@@ -49,109 +49,26 @@ let productController = {
     product: function(req, res){
         id = req.params.id
         comentarios = db.lista.comentarios
-        coms = []
        
-        models.Comentario.findAll({
-            where: [
-                {"producto_id" : req.params.id}
+        models.Producto.findByPk(id, {
+            include : [
+                {association : 'usuario'},
+                {association : 'comentarios',
+                include :  [{ association : 'usuario' }]
+            }
+
             ]
         })
-        .then(function(comentario){
-            return res.send(comentario)
-            // for(let i=0; i < comentario.length; i++){
-            //     coms.push({
-            //         // nombre: usuario_id[i].nombre,
-            //         // foto: usuario_id[i].foto,
-            //         // id: usuario_id[i],
-            //         comment: comentario[i].comentario
-            //     })
-            //     return res.send(coms)
-            // }
-            //return res.render('product', {comentarios : comentario})
-        })
+        .then(function(unProd){
+            let info = unProd
+            
+            //return res.send(info.comentarios[0].usuario.id.toString())
+            return res.render('product', {info: unProd})
+         })
         .catch(function(error){
                  console.log(error);
         })
 
-        
-        // let filtro = {
-        //     where: [{
-        //         id: id
-        //     }]
-        // }
-        //return res.render('productos', {info : db.lista}
-        // let resultado = []
-        // let info = db.lista
-        // for (let i = 0; i < info.length; i++){
-        //     if (info[i].id == id){
-        //         resultado.push(info[i])
-        //     } 
-        //     comentarios = resultado[0].comentarios
-        
-        //OTRA FORMA
-        // comentarios = []
-        // models.Comentario.findAll()
-        // .then(function(comentario){
-        //     for(let i=0; i<comentario.length; i++){
-        //         for(let i = 0; i < locals.Usuario.length; i++){
-        //             if(comentario.usuario_id == locals.Usuario.id){
-        //                 usuario = locals.Usuario[i].id
-        //                 nombre_usuario = locals.Usuario[i].nombre
-        //                 foto_perfil = locals.Usuario[i].foto
-        //             }
-        //         }
-        //         if (comentario.producto_id == id){
-        //             comentarios.push({
-        //                 id: comentario.id,
-        //                 usuario_id: usuario,
-        //                 nombre: nombre_usuario,
-        //                 foto: foto_perfil
-        //             })
-        //         }
-        //     }
-        // })
-        // .catch(function(error){
-        //     console.log(error);
-        // })
-        // return res.send(comentarios)
-
-        models.Producto.findByPk(id)
-            .then((resultado)=>{
-                resultado.comentarios = db.lista[0].comentarios
-                // return res.send(resultado)
-                // return res.send(resultado)
-                return res.render('product', {id : resultado.id, nombre : resultado.nombre, imagen : resultado.foto, descripcion : resultado.descripcion, comentarios : comentarios})
-
-            })
-
-                // for(let i=0; i<producto.length; i++){
-                //     productos.push({
-                //         id: producto[i].id,
-                //         nombre: producto[i].nombre,
-                //         descripcion: producto[i].descripcion,
-                //         foto: producto[i].foto,
-                //         usuario_id: producto[i].usuario_id,
-                //         fecha_carga: producto[i].createdAt,
-                //     })
-                //     req.session.Producto = productos;
-                // }
-                // res.locals.Producto = req.session.Producto
-                // //console.log(req.session.Producto)
-                // //return res.send(producto)
-                // // return res.send(res.locals.Producto)
-                // for(let i=0; i<locals.Producto.length; i++){
-                //     if (locals.Producto[i].id == req.params.id){
-                //         return res.send(locals.Producto[i].id)
-                //     }
-                // }
-                
-                // //     resultado.push(locals.Producto[i])
-                // // } 
-                
-                // // return res.render('product', {id : resultado[0].id, nombre : resultado[0].nombre, imagen : resultado[0].imagen, descripcion : resultado[0].descripcion, comentarios : resultado[0].comentarios})
-            .catch(function(error){
-                console.log(error);
-            })
         
     },
 
