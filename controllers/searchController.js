@@ -6,7 +6,7 @@ const op = db.Sequelize.Op;
 let searchController = {
     busqueda : function(req, res){
         let palabraBuscada = req.query.search;
-        let filtro ={
+        let filtro = { 
             where :{
              [op.or]: [
                { nombre: { [op.like]: `%${ palabraBuscada}%` } },

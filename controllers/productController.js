@@ -3,6 +3,8 @@ let models = require('../database/models')
 
 let productController = {
     index : function(req, res){
+
+        
             //return res.render('productos', {info : db.lista}
             models.Producto.findAll()
             .then(function(productos){
@@ -23,7 +25,13 @@ let productController = {
     todosProductos: function(req, res){
         productos = [];
         //return res.render('productos', {info : db.lista}
-        models.Producto.findAll()
+
+        let filtro = {
+                order: [[ "createdAt" , "DESC"]]
+            }
+        
+
+        models.Producto.findAll(filtro)
             .then(function(producto){
                 for(let i=0; i<producto.length; i++){
                     productos.push({

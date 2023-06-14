@@ -5,7 +5,10 @@ let models = require('../database/models');
 let indexController = {
     home : function(req, res){
         let productos = []
-        models.Producto.findAll()
+        let filtro = {
+            order: [[ "createdAt" , "DESC"]]
+        }
+        models.Producto.findAll(filtro)
         .then(function(producto){
             for(let i=0; i<producto.length; i++){
                 productos.push({
