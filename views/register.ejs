@@ -7,15 +7,18 @@
 	<!-- Header -->
 	<%- include('./partials/header') %>
 	<!-- /Header -->
-
-	<!-- Novedades -->
+	<% if (locals.errors) { %>
+		<p class="errorMsj"> <%= locals.errors.message %> </p>
+	<% } %>
+	<!-- Divs y h1 -->
 	<div class="container products-wrapper">
 		<div class="row">
 			<div class="col-12">
 				<h2 class="products-title">Registrate</h2>
 			</div>
-			<!-- Show the "ultimos" products -->
+			<!-- Formulario -->
 			
+
 			<form action="" method="POST">
 				<label>Email: </label>
 				<input type="email" name="email" required>

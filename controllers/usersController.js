@@ -65,7 +65,6 @@ let usersController = {
             dni : form.dni,
             foto_perfil : form.fotoPerfil
         };
-        req.session.Usuario = newUser
         
         models.Usuario.findOne({
             where: [{
@@ -76,7 +75,9 @@ let usersController = {
             // return res.send(user)
 
             if (user){
-               return res.send('El usuario ya existe')
+                errors.message = '¡El email de usuario ya existe!'
+                res.locals.errors = errors;
+                return res.render('register')
             } else {
                 models.Usuario.create(newUser)
                 .then(function(){
