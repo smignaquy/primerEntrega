@@ -55,6 +55,7 @@ let productController = {
     },
 
     product: function(req, res){
+        // return res.send(req.session.Usuario)
         id = req.params.id
         comentarios = db.lista.comentarios
        
@@ -69,7 +70,8 @@ let productController = {
         })
         .then(function(unProd){
             let info = unProd
-            
+
+            //return res.send(unProd)            
             //return res.send(info.comentarios[0].usuario.id.toString())
             return res.render('product', {info: unProd})
          })
@@ -107,6 +109,33 @@ let productController = {
         .catch(function(error){
             console.log(error);
         })  
+    },
+    edit: function(req, res){
+        return res.redirect('product-add') //{accion: "Editar "}
+    },
+    comentar: function(req, res){
+        // return res.send(req.session.Usuario)
+        id = req.params.id
+
+        if (req.session.Usuario != undefined){
+            newComent = {
+                producto_id: id,
+                usuario_id: req.session.Usuario.id,
+                comentario: req.body.comentario
+            }
+            models.Comentario.create(newComent)
+            .then(function(){
+                //console.log();
+                // return res.redirect('/edit')
+                //return res.send(req.session.Usuario)
+                return res.redirect('/productos/id/'+id)
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+        } else {
+            return res.redirect('/users/login')
+        }
     }
 }
 

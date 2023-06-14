@@ -12,7 +12,10 @@
 		<div class="d-flex align-items-center">
 			<h2 class="products-title"> <%= info.nombre %> </h2> 
 			<p class="product-detail-description">
-				<a href="/productos/cargar">Editar</a>
+				<% if (locals.Usuario != undefined && locals.Usuario.id == info.usuario.id) { %>
+					<a href="/productos/edit/id/<%= info.id %>">Editar</a>
+					<a href="/productos/delete">Borrar</a>
+				<% } %>
 			</p>
 		</div>
 		<div class="product-detail">
@@ -35,8 +38,8 @@
 						<% } %>
 
 					</section>
-					<form class="form" action="/productos/id/<%= id %>" method="GET">
-						<input class="form-input" type="text" value="" placeholder="Agregar comentario">
+					<form class="form" action="/productos/comentar/id/<%= info.id %>" method="POST">
+						<input class="form-input" type="text" name="comentario" value="" placeholder="Agregar comentario">
 						<button type="submit" class="buy-now-button">AGREGAR COMENTARIO</button>
 					</form>
 					<hr>

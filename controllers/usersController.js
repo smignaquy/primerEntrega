@@ -52,7 +52,11 @@ let usersController = {
         // res.render('profile', {user: db.usuarios[0], info : db.lista, post: counter})//user: db.usuarios[0], info : db.lista})
     },
     register: function(req, res){
-        return res.render('register')
+        if (req.session.Usuario == undefined){
+            return res.render('register')
+        } else {
+            return res.redirect('/home')
+        } 
     },
     store:  function(req, res){
         let form = req.body
@@ -92,9 +96,12 @@ let usersController = {
             }
         })      
     },
-
     login: function(req, res){
-        return res.render('login')
+        if (req.session.Usuario == undefined){
+            return res.render('login');
+        } else {
+            return res.redirect('/home');
+        }
     },
 
     procesarLogin: function(req,res){
