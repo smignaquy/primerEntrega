@@ -9,12 +9,12 @@
 	
 	<!-- product detail -->
 	<div class="container products-wrapper">
-		<h2 >Producto subido por: <a class="subido-por" href="/users/id/<% info.usuario.id %>"><%= info.usuario.nombre_usuario %></a></h2>
+		<h2 >Producto subido por: <a class="subido-por" href="/users/id/<%= info.usuario.id %>"><%= info.usuario.nombre_usuario %></a></h2>
 		<div class="d-flex align-items-center">
 			<h2 class="products-title"><%= info.nombre %></h2> 
 			<p class="product-detail-description">
 				<% if (locals.Usuario != undefined && locals.Usuario.id == info.usuario.id) { %>
-					<form action="/productos/id/<%= info.id %>/delete" method="POST">
+					<form action="/productos/delete/id/<%= info.id %>" method="POST" class="deleteButton">
 						<!-- <button><a href="/productos/edit/id/">Editar</a></button> -->
 						<button type="submit">Eliminar</button>
 						<input type="hidden" name="usuarioId" value="<% info.usuario.id %>">

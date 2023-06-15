@@ -16,7 +16,7 @@ router.post('/edit/id/:id', productController.editSubido);
 
 router.post('/comentar/id/:id', productController.comentar);
 
-router.post('/id/:id/delete', productController.delete);
+router.post('/delete/id/:id', productController.delete);
 
 // router.get('/?search=', productController.search)
 

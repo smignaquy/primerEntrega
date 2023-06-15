@@ -51,7 +51,7 @@ let productController = {
     },
 
     product: function(req, res){
-        // return res.send(req.session.Usuario)
+        //return res.send(req.session.Usuario)
         id = req.params.id
         // comentarios = db.lista.comentarios
        
@@ -63,6 +63,7 @@ let productController = {
             }]
         })
         .then(function(unProd){
+            //return res.send(unProd)
             return res.render('product', {info: unProd})
          })
         .catch(function(error){
@@ -155,13 +156,27 @@ let productController = {
     delete: function(req, res){
         let id = req.params.id
         let form = req.body
-        let filtro = {
-            where: [{
-                usuario_id: form.usuarioId
-            }]
-        }
 
-        return res.send(form)
+        models.Comentario.destroy({
+            where: {
+                producto_id : req.params.id
+            }
+        })
+            .then(function(){
+                models.Producto.destroy({
+                    where: {
+                        id: req.params.id
+                    }
+                })
+                .then(function(){
+                    return res.redirect('/home')
+                })
+                .catch(function(error){
+                    console.log(error);
+                })
+            })
+
+        // return res.send(form)
     }
 
 }

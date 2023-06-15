@@ -525,6 +525,9 @@ hr {
 .form-comentario button:hover{
   background-color: #001b40;
 }
+.deleteButton{
+  margin-right: 15px;
+}
 
 
 /*====== Profile ======*/
