@@ -9,14 +9,18 @@
 	<%- include('./partials/header') %>
 	<!-- /Header -->
 
-	<!-- Novedades -->
+	<!-- Errores de validacion. -->
+	<% if (locals.errors) { %>
+		<p class="errorMsj"> <%= locals.errors.message %> </p>
+	<% } %>
+	
 	<div class="container products-wrapper">
 		<div class="row">
 			<div class="col-12">
-				<h2 class="products-title"><%= accion %> productos</h2>
+				<h2 class="title">Agregar Producto</h2>
 			</div>
-			<!-- Show the "ultimos" products -->
-			<form action="" method="POST">		
+			<!-- Formulario de product-add -->
+			<form class="form" action="" method="POST">		
 				<label>Nombre del producto: </label>
 				<input type="text" name="nombre" value="">
 		
@@ -30,11 +34,6 @@
 				<label>Imagen del producto </label>
 				<input type="text" name="imagen" value="">
 		
-				<br>
-				<br>
-
-				<label>Fecha de carga: </label>
-				<input type="date" name="fecha" value="">
 				<br>
 				<br>
 

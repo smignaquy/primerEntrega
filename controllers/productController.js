@@ -1,11 +1,11 @@
 let db = require("../db/dataCarnes");
 let models = require('../database/models')
 
+//Aca guardamos los errores de los formularios de producto
+let errors = {}
+
 let productController = {
     index : function(req, res){
-
-        
-            //return res.render('productos', {info : db.lista}
             models.Producto.findAll()
             .then(function(productos){
                 req.session.Producto = {
@@ -15,7 +15,7 @@ let productController = {
                     fecha_carga: productos.createdAt,
                 }
                 res.locals.Producto = req.session.Producto
-                return res.render('productos');//{info: locals.Producto}
+                return res.render('productos');
             })
             .catch(function(error){
                 console.log(error);
@@ -24,12 +24,9 @@ let productController = {
 
     todosProductos: function(req, res){
         productos = [];
-        //return res.render('productos', {info : db.lista}
-
         let filtro = {
                 order: [[ "createdAt" , "DESC"]]
             }
-        
 
         models.Producto.findAll(filtro)
             .then(function(producto){
@@ -45,8 +42,7 @@ let productController = {
                     req.session.Producto = productos;
                 }
                 res.locals.Producto = req.session.Producto
-                //console.log(req.session.Producto)
-                //return res.send(producto)
+                
                 return res.render('productos');
             })
             .catch(function(error){
@@ -57,29 +53,21 @@ let productController = {
     product: function(req, res){
         // return res.send(req.session.Usuario)
         id = req.params.id
-        comentarios = db.lista.comentarios
+        // comentarios = db.lista.comentarios
        
         models.Producto.findByPk(id, {
             include : [
                 {association : 'usuario'},
                 {association : 'comentarios',
                 include :  [{ association : 'usuario' }]
-            }
-
-            ]
+            }]
         })
         .then(function(unProd){
-            let info = unProd
-
-            //return res.send(unProd)            
-            //return res.send(info.comentarios[0].usuario.id.toString())
             return res.render('product', {info: unProd})
          })
         .catch(function(error){
                  console.log(error);
         })
-
-        
     },
 
     search: function(req, res){
@@ -87,9 +75,9 @@ let productController = {
     },
 
     agregar: function(req, res){
-        return res.render('product-add', {user : db.usuarios[0]})
+        return res.render('product-add')
     },
-    //CHEQUEAR
+    
     processAgregar: function(req, res){
         let form = req.body
 
@@ -99,25 +87,51 @@ let productController = {
             foto : form.imagen,
             usuario_id : req.session.Usuario.id,
         };
+
+        // Validacion del producto.
+
+        if (newProduct.nombre == "") {
+            errors.message = 'El nombre del producto esta vacio!';
+            res.locals.errors = errors;
+            return res.render('product-add')
+
+        } else if (newProduct.descripcion == "") {
+            errors.message = 'La descripcion esta vacia!';
+            res.locals.errors = errors;
+            return res.render('product-add')
         
-        //return res.send(newProduct)
-        models.Producto.create(newProduct)
-        .then(function(){
-            console.log();
-            return res.redirect('/home')
-        })
-        .catch(function(error){
-            console.log(error);
-        })  
+        } else if (newProduct.foto == '') {
+            errors.message = 'Debes agregar un link de una imagen que represente el producto.';
+            res.locals.errors = errors;
+            return res.render('product-add')
+
+        } 
+        // Validacion completada, se agrega el producto en la base.
+        else {
+            models.Producto.create(newProduct)
+            .then(function(){
+                let succes = 'Producto agregado' // ----> Arreglar esto y poder mandarlo a la vista.
+                res.locals.succes = succes
+                return res.redirect('/users/id/'+ req.session.Usuario.id)
+            })
+            .catch(function(error){
+                console.log(error);
+            })  
+        }
     },
     edit: function(req, res){
         return res.redirect('product-add') //{accion: "Editar "}
     },
     comentar: function(req, res){
-        // return res.send(req.session.Usuario)
+
         id = req.params.id
 
-        if (req.session.Usuario != undefined){
+        if (req.session.Usuario == undefined){
+            errors.message = 'Debes loguearte para comentar!'; // ----> Arreglar esto y poder mandarlo a la vista.
+            res.locals.errors = errors;
+            return res.redirect('/users/login')
+
+        } else {
             newComent = {
                 producto_id: id,
                 usuario_id: req.session.Usuario.id,
@@ -133,10 +147,23 @@ let productController = {
             .catch(function(error){
                 console.log(error);
             })
-        } else {
-            return res.redirect('/users/login')
+        } 
+    },
+    editSubido: function(req, res){
+        return res.render('product-add')
+    },
+    delete: function(req, res){
+        let id = req.params.id
+        let form = req.body
+        let filtro = {
+            where: [{
+                usuario_id: form.usuarioId
+            }]
         }
+
+        return res.send(form)
     }
+
 }
 
 module.exports = productController;

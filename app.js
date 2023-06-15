@@ -29,6 +29,7 @@ app.use(session(
     resave: false
   }
 ));
+
 app.use(function(req, res, next){
   if (req.session.Usuario != undefined){
     res.locals.Usuario = req.session.Usuario

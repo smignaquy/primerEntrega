@@ -11,9 +11,12 @@ router.post('/cargar', productController.processAgregar);
 
 router.get('/id/:id', productController.product);
 
-router.get('/edit/id/:id', productController.edit)
+router.get('/edit/id/:id', productController.edit);
+router.post('/edit/id/:id', productController.editSubido);
 
-router.post('/comentar/id/:id', productController.comentar)
+router.post('/comentar/id/:id', productController.comentar);
+
+router.post('/id/:id/delete', productController.delete);
 
 // router.get('/?search=', productController.search)
 

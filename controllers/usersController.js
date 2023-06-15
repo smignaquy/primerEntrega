@@ -2,6 +2,7 @@ let db = require("../db/dataCarnes");
 let models = require('../database/models')
 let bcrypt = require('bcryptjs')
 
+//Aca guardamos los errores de los formularios de usuario
 let errors = {}
 
 let usersController = {
@@ -33,9 +34,8 @@ let usersController = {
         };
         models.Usuario.findOne(filtro)
         .then(function(usuario){
+            // usuario.cantidad = productos.length; ------> ¿¿Xq no andaaaaa??
             let cantidad = productos.length;
-            // usuario.cantidad = productos.length;
-            // return res.send(usuario)
             return res.render('profile', {info: usuario, producto: productos, cant: cantidad})
             })
         .catch(function(error){
@@ -69,32 +69,47 @@ let usersController = {
             dni : form.dni,
             foto_perfil : form.fotoPerfil
         };
+
+        //requirimientos de validacion 
+
+        if (newUser.email == "") {
+            errors.message = 'El email esta vacio!';
+            res.locals.errors = errors;
+            return res.render('register')
+
+        } else if(form.password.length < 3) {
+            errors.message = 'La contraseña debe ser mayor a 3 caracteres!';
+            res.locals.errors = errors;
+            return res.render('register')
+
+        } else if (newUser.nombre_usuario.length == "") {
+            errors.message = 'El nombre de usuario esta vacio!';
+            res.locals.errors = errors;
+            return res.render('register')
+        
+        } else {
         
         models.Usuario.findOne({
             where: [{
                 email : newUser.email
             }]
         }) 
-        .then (function(user){
-            // return res.send(user)
-
+        .then(function(user){
+            //Ultima validacion de la registracion.
             if (user){
                 errors.message = '¡El email de usuario ya existe!'
                 res.locals.errors = errors;
                 return res.render('register')
+            //En caso de que el email sea nuevo, se agrega el usuario a la base.
             } else {
                 models.Usuario.create(newUser)
                 .then(function(){
-                    console.log();
-                    // return res.redirect('/edit')
-                    //return res.send(req.session.Usuario)
-                    return res.redirect('/users/id/'+ req.session.Usuario.id)
-                })
+                    return res.redirect('/users/id/'+ req.session.Usuario.id)})
                 .catch(function(error){
-                    console.log(error);
-                })
-            }
-        })      
+                    console.log(error)})
+                }
+            })      
+        }
     },
     login: function(req, res){
         if (req.session.Usuario == undefined){
@@ -138,16 +153,22 @@ let usersController = {
                             }
                         return res.redirect('/users/id/' + req.session.Usuario.id)
                     }
+            // Requerimientos de validacion
                     else{
                         errors.message = '¡El nombre de usuario existe pero la contraseña es incorrecta!'
                         res.locals.errors = errors;
                         return res.render('login')
                     }
                 } else {
-                    errors.message = '¡El nombre de usuario no existe!'
-                    res.locals.errors = errors;
-                    return res.render('login')
-                    }
+                    if (form.usuario == ""){
+                        errors.message = 'El nombre de usuario esta vacio!';
+                        res.locals.errors = errors;
+                        return res.render('login')
+                    } else {
+                        errors.message = '¡El nombre de usuario no existe!'
+                        res.locals.errors = errors;
+                        return res.render('login')
+                    }}
                 })
             .catch(function(error){
                 console.log(error);
