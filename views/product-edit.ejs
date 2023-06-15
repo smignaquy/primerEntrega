@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+
+<%- include('./partials/head') %>
+
+<body>
+	<!-- Header -->
+	<%- include('./partials/header') %>
+	<!-- /Header -->
+
+	<!-- Errores de validacion. -->
+	<% if (locals.errors) { %>
+		<p class="errorMsj"> <%= locals.errors.message %> </p>
+	<% } %>
+	
+	<div class="container products-wrapper">
+		<div class="row">
+			<div class="col-12">
+				<h2 class="title">Editar Producto: <%= info.nombre %></h2>
+			</div>
+			<!-- Formulario de product-add -->
+			<form class="form" action="" method="POST">		
+				<label>Nombre del producto: </label>
+				<input type="text" name="nombre" value="<%= info.nombre %>">
+		
+				<br>
+				<br>
+		
+				<label>Descripción: </label>
+				<input type="text" name="descripcion" value="<%= info.descripcion %>">
+				<br>
+				<br>
+				<label>Imagen del producto </label>
+				<input type="text" name="imagen" value="<%= info.foto %>">
+		
+				<br>
+				<br>
+
+				<button type="submit">Enviar</button>
+				
+			</form>
+
+
+	<!-- footer -->
+	<%- include('./partials/footer') %>
+	<!-- /footer -->
+</body>
+
+</html>

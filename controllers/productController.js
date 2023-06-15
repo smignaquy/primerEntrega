@@ -120,9 +120,6 @@ let productController = {
             })  
         }
     },
-    edit: function(req, res){
-        return res.redirect('product-add') //{accion: "Editar "}
-    },
     comentar: function(req, res){
 
         id = req.params.id
@@ -151,7 +148,20 @@ let productController = {
         } 
     },
     editSubido: function(req, res){
-        return res.render('product-add')
+        let id = req.params.id
+
+        models.Producto.findByPk(id)
+        .then(function(resultado){
+            // return res.send(resultado)
+            return res.render('product-edit', {info: resultado})
+        })
+        .catch(function(error){
+            console.log(error);
+        }) 
+        
+    },
+    edit: function(req, res){
+        return res.render('product-edit')
     },
     delete: function(req, res){
         let id = req.params.id
