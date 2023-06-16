@@ -147,22 +147,34 @@ let productController = {
             })
         } 
     },
-    editSubido: function(req, res){
+    editProcess: function(req, res){
         let id = req.params.id
-
-        models.Producto.findByPk(id)
-        .then(function(resultado){
-            // return res.send(resultado)
-            return res.render('product-edit', {info: resultado})
+        cambios = {
+            nombre: req.body.nombre,
+            descripcipn: req.body.descripcion,
+            foto: req.body.foto
+        }
+        models.Producto.update(cambios, 
+            {
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(function(){
+            //return res.send(cambios)
+            return res.redirect('/productos/id/'+ req.params.id)
         })
         .catch(function(error){
             console.log(error);
-        }) 
-        
+        })
+
     },
     edit: function(req, res){
-        return res.render('product-edit')
-    },
+        models.Producto.findByPk(id)
+        .then(function(unProd){
+            //return res.send(unProd)
+            return res.render('product-edit', {info: unProd})
+    })},
     delete: function(req, res){
         let id = req.params.id
         let form = req.body

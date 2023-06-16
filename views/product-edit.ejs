@@ -20,7 +20,7 @@
 				<h2 class="title">Editar Producto: <%= info.nombre %></h2>
 			</div>
 			<!-- Formulario de product-add -->
-			<form class="form" action="" method="POST">		
+			<form class="form" action="/productos/edit/id/<%= info.id %>" method="POST">		
 				<label>Nombre del producto: </label>
 				<input type="text" name="nombre" value="<%= info.nombre %>">
 		
@@ -29,10 +29,12 @@
 		
 				<label>Descripción: </label>
 				<input type="text" name="descripcion" value="<%= info.descripcion %>">
+
 				<br>
 				<br>
+
 				<label>Imagen del producto </label>
-				<input type="text" name="imagen" value="<%= info.foto %>">
+				<input type="text" name="foto" value="<%= info.foto %>">
 		
 				<br>
 				<br>

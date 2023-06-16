@@ -12,7 +12,7 @@ router.post('/cargar', productController.processAgregar);
 router.get('/id/:id', productController.product);
 
 router.get('/edit/id/:id', productController.edit);
-router.post('/edit/id/:id', productController.editSubido);
+router.post('/edit/id/:id', productController.editProcess);
 
 router.post('/comentar/id/:id', productController.comentar);
 
