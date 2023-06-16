@@ -178,19 +178,28 @@ let productController = {
             descripcion: req.body.descripcion,
             foto: req.body.foto
         }
-        models.Producto.update(cambios, 
-            {
-            where: {
-                id: req.params.id
+        models.Producto.findByPk(req.params.id)
+        .then(function(producto){
+            //return res.send(producto)
+            if(producto.usuario_id == req.session.Usuario.id){
+                models.Producto.update(cambios, 
+                    {
+                    where: {
+                        id: req.params.id
+                    }
+                })
+                .then(function(){
+                    //return res.send(cambios)
+                    return res.redirect('/productos/id/'+ req.params.id)
+                })
+                .catch(function(error){
+                    console.log(error);
+                })
+            } else {
+                return res.redirect('/home')
             }
         })
-        .then(function(){
-            //return res.send(cambios)
-            return res.redirect('/productos/id/'+ req.params.id)
-        })
-        .catch(function(error){
-            console.log(error);
-        })
+ 
 
     },
     edit: function(req, res){
@@ -199,6 +208,7 @@ let productController = {
             //return res.send(unProd)
             return res.render('product-edit', {info: unProd})
         })},
+
     delete: function(req, res){
         let id = req.params.id
         let form = req.body
