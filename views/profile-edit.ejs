@@ -18,7 +18,7 @@
 					<div class="col-12">
 						<h2 class="title">Editar Perfil de <%= info.nombre %></h2>
 					</div>
-					<form action="" method="POST" class="form">
+					<form action="/users/edit/id/<%= info.id %>" method="POST" class="form">
 						
 						<label>Email: </label>
 						<input type="email" name="email" value="<%= info.email %>">
