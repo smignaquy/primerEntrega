@@ -31,7 +31,7 @@
 				</article>
 				<div class="col-12 col-lg-4">
 					<section class="comments"> 
-						<% for (let i = 0; i < info.comentarios.length; i++){ %>
+						<% for (let i = info.comentarios.length - 1; i >= 0; i--){ %>
 							<article>
 								<img src="<%= info.comentarios[i].usuario.foto_perfil  %>" alt="">
 								<div class="data">
@@ -43,11 +43,21 @@
 						<% } %>
 
 					</section>
-					<form class="form-comentario" action="/productos/comentar/id/<%= info.id %>" method="POST">
-						<input class="comentario" type="text" name="comentario" value="" placeholder="Agregar comentario">
-						<br>
-						<br>
-						<button type="submit" class="buy-now-button">AGREGAR COMENTARIO</button>
+					<% if(locals.Usuario != undefined) { %>
+						<form class="form-comentario" action="/productos/comentar/id/<%= info.id %>" method="POST">
+							<input class="comentario" type="text" name="comentario" value="" placeholder="Agregar comentario">
+							<br>
+							<br>
+							<button type="submit" class="buy-now-button">AGREGAR COMENTARIO</button>
+						</form>
+					<% } else { %>
+						<form class="form-comentario" action="/productos/comentar/id/<%= info.id %>" method="POST">
+							<input class="comentario" type="hidden" name="comentario" value="" placeholder="Agregar comentario">
+							<br>
+							<br>
+							<button type="submit" class="buy-now-button">DEBES ESTAR LOGUEADO PARA PODER COMENTAR</button>
+						</form>
+					<% } %>
 					</form>
 				</div>
 			</div>

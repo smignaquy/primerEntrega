@@ -59,8 +59,8 @@ let productController = {
             include : [
                 {association : 'usuario'},
                 {association : 'comentarios',
-                include :  [{ association : 'usuario' }]
-            }]
+                include :  [{ association : 'usuario' }]}
+            ]
         })
         .then(function(unProd){
             //return res.send(unProd)
@@ -76,7 +76,12 @@ let productController = {
     },
 
     agregar: function(req, res){
-        return res.render('product-add')
+        if (req.session.Usuario != undefined){
+            return res.render('product-add')
+        } else {
+            return res.redirect('/home')
+        }
+        
     },
     
     processAgregar: function(req, res){
@@ -148,57 +153,68 @@ let productController = {
         } 
     },
     editProcess: function(req, res){
-        let id = req.params.id
         cambios = {
             nombre: req.body.nombre,
-            descripcipn: req.body.descripcion,
+            descripcion: req.body.descripcion,
             foto: req.body.foto
         }
-        models.Producto.update(cambios, 
-            {
-            where: {
-                id: req.params.id
-            }
-        })
-        .then(function(){
-            //return res.send(cambios)
-            return res.redirect('/productos/id/'+ req.params.id)
-        })
-        .catch(function(error){
-            console.log(error);
-        })
-
-    },
-    edit: function(req, res){
-        models.Producto.findByPk(id)
-        .then(function(unProd){
-            //return res.send(unProd)
-            return res.render('product-edit', {info: unProd})
-    })},
-    delete: function(req, res){
-        let id = req.params.id
-        let form = req.body
-
-        models.Comentario.destroy({
-            where: {
-                producto_id : req.params.id
-            }
-        })
-            .then(function(){
-                models.Producto.destroy({
+        models.Producto.findByPk(req.params.id)
+        .then(function(producto){
+            if(producto.usuario_id == req.session.Usuario.id){
+                models.Producto.update(cambios, 
+                    {
                     where: {
                         id: req.params.id
                     }
                 })
                 .then(function(){
-                    return res.redirect('/home')
+                    //return res.send(cambios)
+                    return res.redirect('/productos/id/'+ req.params.id)
                 })
                 .catch(function(error){
                     console.log(error);
                 })
-            })
-
-        // return res.send(form)
+            } else {
+                return res.redirect('/home')
+            }
+        })
+    },
+    edit: function(req, res){
+        id = req.params.id
+        models.Producto.findByPk(id)
+        .then(function(unProd){
+            //return res.send(unProd)
+            return res.render('product-edit', {info: unProd})
+        })},
+    delete: function(req, res){
+        let id = req.params.id
+        let form = req.body
+        
+        models.Producto.findByPk(req.params.id)
+        .then(function(producto){
+            //return res.send(producto)
+            if(producto.usuario_id == req.session.Usuario.id){
+                models.Comentario.destroy({
+                    where: {
+                        producto_id : req.params.id
+                    }
+                })
+                    .then(function(){
+                        models.Producto.destroy({
+                            where: {
+                                id: req.params.id
+                            }
+                        })
+                        .then(function(){
+                            return res.redirect('/home')
+                        })
+                        .catch(function(error){
+                            console.log(error);
+                        })
+                    })
+            } else {
+                return res.redirect('/home')
+            }})
     }
 
 }
