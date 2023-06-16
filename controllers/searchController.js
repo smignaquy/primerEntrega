@@ -7,7 +7,7 @@ let searchController = {
     busqueda : function(req, res){
         let palabraBuscada = req.query.search;
         let filtro = { 
-            where :{
+            where : {
              [op.or]: [
                { nombre: { [op.like]: `%${ palabraBuscada}%` } },
                { descripcion: { [op.like]: `%${ palabraBuscada}%` } }

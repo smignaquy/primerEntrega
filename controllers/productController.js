@@ -3,6 +3,7 @@ let models = require('../database/models')
 
 //Aca guardamos los errores de los formularios de producto
 let errors = {}
+let success = {}
 
 let productController = {
     index : function(req, res){
@@ -79,47 +80,65 @@ let productController = {
         return res.render('product-add')
     },
     
-    processAgregar: function(req, res){
-        let form = req.body
-
+    processAgregar: function(req, res) {
+        let form = req.body;
+      
         let newProduct = {
-            nombre : form.nombre,
-            descripcion: form.descripcion,
-            foto : form.imagen,
-            usuario_id : req.session.Usuario.id,
+          nombre: form.nombre,
+          descripcion: form.descripcion,
+          foto: form.imagen,
+          usuario_id: req.session.Usuario.id,
         };
-
+      
         // Validacion del producto.
-
         if (newProduct.nombre == "") {
-            errors.message = 'El nombre del producto esta vacio!';
-            res.locals.errors = errors;
-            return res.render('product-add')
-
+          errors.message = 'El nombre del producto está vacío!';
+          res.locals.errors = errors;
+          return res.render('product-add');
+ 
         } else if (newProduct.descripcion == "") {
-            errors.message = 'La descripcion esta vacia!';
-            res.locals.errors = errors;
-            return res.render('product-add')
-        
+          errors.message = 'La descripción está vacía!';
+          res.locals.errors = errors;
+          return res.render('product-add');
+ 
         } else if (newProduct.foto == '') {
-            errors.message = 'Debes agregar un link de una imagen que represente el producto.';
-            res.locals.errors = errors;
-            return res.render('product-add')
-
-        } 
+          errors.message = 'Debes agregar un enlace de una imagen que represente el producto.';
+          res.locals.errors = errors;
+          return res.render('product-add');
+        }
+ 
         // Validacion completada, se agrega el producto en la base.
         else {
-            models.Producto.create(newProduct)
-            .then(function(){
-                let succes = 'Producto agregado' // ----> Arreglar esto y poder mandarlo a la vista.
-                res.locals.succes = succes
-                return res.redirect('/users/id/'+ req.session.Usuario.id)
+          models.Producto.findOne({
+              where: {
+                nombre: newProduct.nombre
+              }
             })
-            .catch(function(error){
-                console.log(error);
-            })  
+           
+            .then(function(resultado) {
+              if (resultado) {
+                // Ultima validacion
+                errors.message = '¡El nombre del producto ya existe!';
+                res.locals.errors = errors;
+                return res.render('product-add');
+            
+            } else {
+                models.Producto.create(newProduct)
+                  .then(function() {
+                    success.message = 'Producto agregado'; // ----> Arreglar esto y poder mandarlo a la vista.
+                    res.locals.success = success;
+                    // return res.send(res.locals.success)
+                    return res.redirect('/users/id/' + req.session.Usuario.id);
+                    // return res.render('profile')
+                  });
+              }
+           
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
         }
-    },
+    },      
     comentar: function(req, res){
 
         id = req.params.id
@@ -148,10 +167,10 @@ let productController = {
         } 
     },
     editProcess: function(req, res){
-        let id = req.params.id
+        
         cambios = {
             nombre: req.body.nombre,
-            descripcipn: req.body.descripcion,
+            descripcion: req.body.descripcion,
             foto: req.body.foto
         }
         models.Producto.update(cambios, 
@@ -161,7 +180,6 @@ let productController = {
             }
         })
         .then(function(){
-            //return res.send(cambios)
             return res.redirect('/productos/id/'+ req.params.id)
         })
         .catch(function(error){
@@ -170,6 +188,7 @@ let productController = {
 
     },
     edit: function(req, res){
+        let id = req.params.id
         models.Producto.findByPk(id)
         .then(function(unProd){
             //return res.send(unProd)
