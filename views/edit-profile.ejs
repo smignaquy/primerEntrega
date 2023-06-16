@@ -13,22 +13,13 @@
 	<!-- Divs y h1 -->
 	<div class="container products-wrapper">
 		<div class="row">
-
-			<!-- Formulario de edit de perfil -->
 					<div class="col-12">
 						<h2 class="title">Editar Perfil de <%= info.nombre %></h2>
 					</div>
-					<form action="" method="POST" class="form">
+					<form action="/users/edit/id/<% info.id %>/ok" method="POST" class="form">
 						
 						<label>Email: </label>
 						<input type="email" name="email" value="<%= info.email %>">
-						
-						<br>
-						<br>
-						
-						<label>Nueva contraseña (opcional): </label>
-						<input type="password" name="password">
-						
 						<br>
 						<br>
 				
@@ -39,7 +30,7 @@
 						<br>
 
 						<label>Fecha de Nacimiento: </label>
-						<input type="date" name="fecha"  value="<%= info.fecha %>">
+						<input type="date" name="fechaNacimiento"  value="<%= info.fecha %>">
 						
 						<br>
 						<br>
@@ -51,7 +42,7 @@
 						<br>
 						
 						<label>Foto de Perfil: </label>
-						<input type="text" name="foto"  value="<%= info.foto %>">
+						<input type="text" name="fotoPerfil"  value="<%= info.foto %>">
 						
 						<br>
 						<br>

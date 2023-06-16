@@ -441,6 +441,10 @@ hr {
   box-shadow: 0 10px 25px rgba(92, 99, 105, .2);
 }
 
+.hidden{
+  display: none;
+}
+
 .row {
   display: flex;
   align-items: center;

@@ -11,7 +11,10 @@ router.post('/register', usersController.store);
 router.get('/login', usersController.login);
 router.post('/login', usersController.procesarLogin)
 
-router.get('/edit', usersController.edit);
+router.get('/edit/id/:id', usersController.edit);
+router.post('/edit/id/:id', usersController.procesarEdit);
+// router.post('/edit/id/:id/ok', usersController.updatedPerfil);
+
 
 router.post('/logout', usersController.logout)
 

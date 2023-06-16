@@ -1,7 +1,8 @@
 let db = require("../db/dataCarnes");
 let models = require('../database/models')
 const op = models.Sequelize.Op;
-let bcrypt = require('bcryptjs')
+let bcrypt = require('bcryptjs');
+const { redirect } = require("express/lib/response");
 
 //Aca guardamos los errores de los formularios de usuario
 let errors = {}
@@ -216,8 +217,233 @@ let usersController = {
     },
 
     edit: function(req, res){
-        return res.render('profile-edit', {user: db.usuarios[0]})
+        // let form = req.body
+        // return res.send(req.session.Usuario)
+        if (req.session.Usuario == undefined){
+            return res.redirect('/users/login')
+        } else {
+            // return res.send(req.session.Usuario)
+            return res.render('profile-edit', {info: req.session.Usuario})
+        }
     },
+
+    procesarEdit: function(req, res){
+        let form = req.body
+
+        let newUser = {
+            email : form.email,
+            password : bcrypt.hashSync(form.password, 10),
+            nombre_usuario: form.usuario,
+            fecha : form.fechaNacimiento,
+            dni : form.dni,
+            foto_perfil : form.fotoPerfil
+        };
+
+        if (newUser.email == "") {
+            errors.message = 'El email esta vacio!';
+            res.locals.errors = errors;
+            return res.render('register')
+
+        } else if (form.password.length < 3) {
+            errors.message = 'La contraseña debe ser mayor a 3 caracteres!';
+            res.locals.errors = errors;
+            return res.render('register')
+
+        } else if (newUser.nombre_usuario.length == "") {
+            errors.message = 'El nombre de usuario esta vacio!';
+            res.locals.errors = errors;
+            return res.render('register')
+        
+        } else if (newUser.dni.toString().length == 0 ){
+            errors.message = '¡El dni ingresado esta vacio!'
+            res.locals.errors = errors;
+            return res.render('register')
+        
+        } else if (newUser.dni.toString().length < 8 ){
+            errors.message = '¡El dni ingresado no existe, deben ser 8 caracteres!'
+            res.locals.errors = errors;
+            return res.render('register')
+
+        } else {
+        
+        models.Usuario.findOne({
+            where: {
+                [op.or]: [
+                  { email: newUser.email },
+                  { nombre_usuario: newUser.nombre_usuario },
+                  { dni: newUser.dni },
+                ],
+              },
+        }) 
+        .then(function(user){
+            // return res.send(user)
+            if (user){
+            // Ultima validacion de la registracion.
+                if (user.email == newUser.email){
+                    errors.message = '¡El email de usuario ya existe!'
+                    res.locals.errors = errors;
+                    return res.render('register')
+
+                } else if (user.nombre_usuario == newUser.nombre_usuario){
+                    errors.message = '¡El nombre de usuario ya existe!'
+                    res.locals.errors = errors;
+                    return res.render('register')
+
+                } else if (user.dni == newUser.dni){
+                    errors.message = '¡El dni del usuario ya existe!'
+                    res.locals.errors = errors;
+                    return res.render('register')
+                }
+            }
+
+            // En caso de que el usuario sea completamente nuevo, se agrega el usuario a la base.
+
+            if (form.password == ''){
+                models.Usuario.update(
+
+                    {email: form.email,
+                        nombre_usuario: form.usuario,
+                        foto_perfil: form.foto,
+                        fecha: form.fecha,
+                        dni: form.dni},
+
+                    { where: [{
+                        id: req.session.Usuario.id
+                    }]
+
+                }) .then(function(){
+                    return res.redirect('/users/id/' + req.params.id)
+                }) .catch(function(error){
+                    console.log(error)
+                })
+            } else {
+                models.Usuario.update(
+                    
+                    {email: form.email,
+                        nombre_usuario: form.usuario,
+                        password: bcrypt.hashSync(form.password, 10),
+                        foto_perfil: form.foto,
+                        fecha: form.fecha,
+                        dni: form.dni},
+
+                    { where: [{
+                        id: req.session.Usuario.id
+                    }]
+                    
+                }) .then(function(){
+                    return res.redirect('/users/id/' + req.params.id)
+                }) .catch(function(error){
+                    console.log(error)
+                })
+            }
+        })
+        .catch(function(error){
+            console.log(error);
+        })      
+        }
+
+        //1ros requirimientos de validacion 
+
+        // if (newUser.email == "") {
+        //     errors.message = 'El email esta vacio!';
+        //     res.locals.errors = errors;
+        //     return res.render('profile-edit')
+
+        // } else if (form.password.length < 3) {
+        //     errors.message = 'La contraseña debe ser mayor a 3 caracteres!';
+        //     res.locals.errors = errors;
+        //     return res.render('profile-edit')
+
+        // } else if (newUser.nombre_usuario.length == "") {
+        //     errors.message = 'El nombre de usuario esta vacio!';
+        //     res.locals.errors = errors;
+        //     return res.render('profile-edit')
+        
+        // } else if (newUser.dni.toString().length == 0 ){
+        //     errors.message = '¡El dni ingresado esta vacio!'
+        //     res.locals.errors = errors;
+        //     return res.render('profile-edit')
+        
+        // } else if (newUser.dni.toString().length < 8 ){
+        //     errors.message = '¡El dni ingresado no existe, deben ser 8 caracteres!'
+        //     res.locals.errors = errors;
+        //     return res.render('profile-edit')
+
+        // } else {
+
+        //     models.Usuario.findOne({
+        //         where: {
+        //             [op.or]: [
+        //             { email: newUser.email },
+        //             { nombre_usuario: newUser.nombre_usuario },
+        //             { dni: newUser.dni },
+        //             ],
+        //         },
+        //     }) 
+        //     .then(function(user){
+        //         // return res.send(user)
+        //         if (user){
+        //         // Ultima validacion de la registracion.
+        //             if (user.email == newUser.email){
+        //                 errors.message = '¡El email de usuario ya existe!'
+        //                 res.locals.errors = errors;
+        //                 return res.render('register')
+
+        //             } else if (user.nombre_usuario == newUser.nombre_usuario){
+        //                 errors.message = '¡El nombre de usuario ya existe!'
+        //                 res.locals.errors = errors;
+        //                 return res.render('register')
+
+        //             } else if (user.dni == newUser.dni){
+        //                 errors.message = '¡El dni del usuario ya existe!'
+        //                 res.locals.errors = errors;
+        //                 return res.render('register')
+        //             }
+        //         } 
+
+
+                // if (form.password == ''){
+                //     models.Usuario.update(
+
+                //         {email: form.email,
+                //             nombre_usuario: form.usuario,
+                //             foto_perfil: form.foto,
+                //             fecha: form.fecha,
+                //             dni: form.dni},
+
+                //         { where: [{
+                //             id: req.session.Usuario.id
+                //         }]
+
+                //     }) .then(function(){
+                //         return res.redirect('/users/id/' + req.params.id)
+                //     }) .catch(function(error){
+                //         console.log(error)
+                //     })
+                // } else {
+                //     models.Usuario.update(
+                        
+                //         {email: form.email,
+                //             nombre_usuario: form.usuario,
+                //             password: bcrypt.hashSync(form.password, 10),
+                //             foto_perfil: form.foto,
+                //             fecha: form.fecha,
+                //             dni: form.dni},
+
+                //         { where: [{
+                //             id: req.session.Usuario.id
+                //         }]
+                        
+                //     }) .then(function(){
+                //         return res.redirect('/users/id/' + req.params.id)
+                //     }) .catch(function(error){
+                //         console.log(error)
+                //     })
+                // }
+        //     })
+        // }
+    },
+
     logout: function(req,res){
             //destruir session
             req.session.destroy()
