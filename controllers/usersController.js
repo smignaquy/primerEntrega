@@ -1,5 +1,6 @@
 let db = require("../db/dataCarnes");
 let models = require('../database/models')
+const op = models.Sequelize.Op;
 let bcrypt = require('bcryptjs')
 
 //Aca guardamos los errores de los formularios de usuario
@@ -70,14 +71,14 @@ let usersController = {
             foto_perfil : form.fotoPerfil
         };
 
-        //requirimientos de validacion 
+        //1ros requirimientos de validacion 
 
         if (newUser.email == "") {
             errors.message = 'El email esta vacio!';
             res.locals.errors = errors;
             return res.render('register')
 
-        } else if(form.password.length < 3) {
+        } else if (form.password.length < 3) {
             errors.message = 'La contraseña debe ser mayor a 3 caracteres!';
             res.locals.errors = errors;
             return res.render('register')
@@ -87,28 +88,62 @@ let usersController = {
             res.locals.errors = errors;
             return res.render('register')
         
+        } else if (newUser.dni.toString().length == 0 ){
+            errors.message = '¡El dni ingresado esta vacio!'
+            res.locals.errors = errors;
+            return res.render('register')
+        
+        } else if (newUser.dni.toString().length < 8 ){
+            errors.message = '¡El dni ingresado no existe, deben ser 8 caracteres!'
+            res.locals.errors = errors;
+            return res.render('register')
+
         } else {
         
         models.Usuario.findOne({
-            where: [{
-                email : newUser.email
-            }]
+            where: {
+                [op.or]: [
+                  { email: newUser.email },
+                  { nombre_usuario: newUser.nombre_usuario },
+                  { dni: newUser.dni },
+                ],
+              },
         }) 
         .then(function(user){
-            //Ultima validacion de la registracion.
+            // return res.send(user)
             if (user){
-                errors.message = '¡El email de usuario ya existe!'
-                res.locals.errors = errors;
-                return res.render('register')
-            //En caso de que el email sea nuevo, se agrega el usuario a la base.
-            } else {
+            // Ultima validacion de la registracion.
+                if (user.email == newUser.email){
+                    errors.message = '¡El email de usuario ya existe!'
+                    res.locals.errors = errors;
+                    return res.render('register')
+
+                } else if (user.nombre_usuario == newUser.nombre_usuario){
+                    errors.message = '¡El nombre de usuario ya existe!'
+                    res.locals.errors = errors;
+                    return res.render('register')
+
+                } else if (user.dni == newUser.dni){
+                    errors.message = '¡El dni del usuario ya existe!'
+                    res.locals.errors = errors;
+                    return res.render('register')
+                }
+            }
+
+            // En caso de que el usuario sea completamente nuevo, se agrega el usuario a la base.
+
                 models.Usuario.create(newUser)
                 .then(function(){
-                    return res.redirect('/users/id/'+ req.session.Usuario.id)})
+                    // return res.send(req.session.usuario)
+                    // return res.redirect('/users/id/'+ req.session.Usuario.id)})
+                    return res.redirect('/home')})
                 .catch(function(error){
                     console.log(error)})
-                }
-            })      
+                    
+            })
+        .catch(function(error){
+            console.log(error);
+        })      
         }
     },
     login: function(req, res){
