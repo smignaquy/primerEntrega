@@ -266,8 +266,9 @@ let usersController = {
             return res.render('profile-edit', {info: req.session.Usuario})
 
         } else {
+            // res.send(form)
 
-            if (form.password == ''){
+            if (form.password === ''){
                 models.Usuario.update(
 
                     {email: form.email,
@@ -286,20 +287,20 @@ let usersController = {
                     console.log(error)
                 })
             } else {
-                models.Usuario.update(
-                    
-                    {email: form.email,
-                        nombre_usuario: form.usuario,
-                        password: bcrypt.hashSync(form.password, 10),
-                        foto_perfil: form.foto,
-                        fecha: form.fecha,
-                        dni: form.dni},
-
-                    { where: [{
-                        id: req.session.Usuario.id
+                res.send(form)
+                models.Usuario.update({
+                    email: form.email,
+                    nombre_usuario: form.usuario,
+                    password: newUser.password,
+                    foto_perfil: form.foto,
+                    fecha: form.fecha,
+                    dni: form.dni
+                  }, {
+                    where: [{
+                      id: req.session.Usuario.id
                     }]
-                    
-                }) .then(function(){
+                  }) .then(function(){
+                    // return res.send(user)
                     return res.redirect('/users/id/' + req.params.id)
                 }) .catch(function(error){
                     console.log(error)

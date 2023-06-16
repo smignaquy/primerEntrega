@@ -6,23 +6,6 @@ let errors = {}
 let success = {}
 
 let productController = {
-    index : function(req, res){
-            models.Producto.findAll()
-            .then(function(productos){
-                req.session.Producto = {
-                    nombre: productos.nombre,
-                    descripcion: productos.descripcion,
-                    usuario: productos.usuario_id,
-                    fecha_carga: productos.createdAt,
-                }
-                res.locals.Producto = req.session.Producto
-                return res.render('productos');
-            })
-            .catch(function(error){
-                console.log(error);
-            })
-        },
-
     todosProductos: function(req, res){
         productos = [];
         let filtro = {
